@@ -141,6 +141,26 @@ class Mover {
         this.acceleration.mult(0);
     }
 
+    checkEdges() {
+        if (this.location.x > width - this.mass) {
+          this.location.x = width - this.mass;
+          this.velocity.x *= -1;
+        } else if (this.location.x < this.mass) {
+          this.location.x = this.mass;
+          this.velocity.x *= -1;
+        }
+
+        if (this.location.y > height - this.mass) {
+          this.location.y = height - this.mass;
+          this.velocity.y *= -1;
+        }else if (this.location.y < this.mass) {
+          this.location.y = this.mass;
+          this.velocity.y *= -1;
+        }
+      }
+
+
+
     display(){
         const angle = this.velocity.heading();
         push();
