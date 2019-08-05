@@ -52,7 +52,9 @@ class Mover {
     attract(attractor, locationProp, massProp, attractionConstant){
         // gravitational attraction = (G * m1 * m2) / (distance * distance)
         // get the direction of attraction
-        const f = p5.Vector.sub(this.location, attractor[locationProp])
+        let lProp = locationProp ||  'location';
+        let mProp = massProp || attractor.mass;
+        const f = p5.Vector.sub(this.location, attractor[lProp])
         // get the distance between those objects
         let  distance = f.mag();
         let G = attractionConstant || DEFAULTS.G;
@@ -61,7 +63,7 @@ class Mover {
 
         // normalize the force so we can scale it by the strength of attraction
         f.normalize();
-        const strength = (G * this.mass * attractor[massProp]) / (distance * distance);
+        const strength = (G * this.mass * attractor[mProp]) / (distance * distance);
         f.mult(strength);
 
         return f;
@@ -103,7 +105,7 @@ class Mover {
     }
 
     display(){
-        const angle = this.velocity.heading() + PI/4;
+        const angle = this.velocity.heading();
         push();
         translate(this.location.x, this.location.y);
         rotate(angle);
