@@ -3,6 +3,8 @@ class Spring {
         this.anchor = createVector(x, y);
         this.restLength = length;
         this.k = 0.2;
+        this.minConstraint = 30;
+        this.maxConstraint = 200;
 
         this.bob = new Bob(x, y + length);
     }
@@ -20,6 +22,13 @@ class Spring {
         force.normalize();
         force.mult(-1 * this.k * stretch);
         this.bob.applyForce(force);
+    }
+
+    update(){
+        this.connect();
+        this.constrainLength( this.minConstraint, this.maxConstraint);
+        this.bob.applyGravity();
+        this.bob.update();
     }
 
     // Constrain the distance between bob and anchor between min and max

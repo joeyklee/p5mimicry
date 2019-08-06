@@ -1,6 +1,6 @@
 {
   "name": "nocjs",
-  "version": "0.0.2-beta.3",
+  "version": "0.0.2-beta.4",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -8,7 +8,8 @@
     "build:main": "babel --copy-files --out-dir dist --ignore index_test.js src",
     "build:umd": "webpack --config webpack.config.babel.js",
     "prebuild": "rimraf dist",
-    "pack": "npm pack"
+    "pack": "npm pack",
+    "publish:npm": "npm run build:main && npm run build:umd && npm publish"
   },
   "repository": {
     "type": "git",
