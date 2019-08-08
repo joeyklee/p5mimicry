@@ -72,9 +72,14 @@ class Mover {
         // How far away are we from the path?
         let distance = p5.Vector.dist(predictLocation, normalPoint);
         // Only if the distance is greater than the path's radius do we bother to steer
+        
+        // FROM NOC
         if (distance > path.radius) {
             this.seek(target);
         }
+
+        // Seek always
+        // this.seek(target)
     }
 
     // A function to get the normal point from a point (p) to a line segment (a-b)
