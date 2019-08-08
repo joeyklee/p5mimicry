@@ -1,6 +1,6 @@
 {
   "name": "nocjs",
-  "version": "0.0.2-beta.4",
+  "version": "0.0.2-beta.5",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
