@@ -50,6 +50,46 @@ class Mover {
         this.applyForce(f);
     }
 
+    follow(path){
+        let predict = this.velocity.copy();
+        predict.normalize();
+        predict.mult(50); // predict a position 50px ahead
+        let predictLocation = p5.Vector.add(this.location, predict);
+
+        // look at the line segment;
+        let a = path.start;
+        let b = path.end;
+
+        // get the normal point to the line
+        let normalPoint = this.getNormalPoint(predictLocation, a, b);
+        // find the target point a bit further ahead of normal
+        let dir = p5.Vector.sub(b, a);
+        dir.normalize();
+        dir.mult(10); // arbitrary 10 pixels ahead
+        
+        let target = p5.Vector.add(normalPoint, dir);
+
+        // How far away are we from the path?
+        let distance = p5.Vector.dist(predictLocation, normalPoint);
+        // Only if the distance is greater than the path's radius do we bother to steer
+        if (distance > path.radius) {
+            this.seek(target);
+        }
+    }
+
+    // A function to get the normal point from a point (p) to a line segment (a-b)
+    // This function could be optimized to make fewer new Vector objects
+    getNormalPoint(p, a, b) {
+        // Vector from a to p
+        let ap = p5.Vector.sub(p, a);
+        // Vector from a to b
+        let ab = p5.Vector.sub(b, a);
+        ab.normalize(); // Normalize the line
+        // Project vector "diff" onto line by using the dot product
+        ab.mult(ap.dot(ab));
+        let normalPoint = p5.Vector.add(a, ab);
+        return normalPoint;
+    }
 
     attract(attractor, locationProp, massProp, attractionConstant){
         // gravitational attraction = (G * m1 * m2) / (distance * distance)
