@@ -9,6 +9,10 @@ beta:
 https://unpkg.com/nocjs@0.0.2-beta.5/dist/nocjs.min.js
 ```
 
+see versions:
+https://www.npmjs.com/package/nocjs
+
+
 ## WIP
 
 Working through these: https://github.com/nature-of-code/noc-examples-p5.js
