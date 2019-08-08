@@ -11,6 +11,8 @@ https://unpkg.com/nocjs@0.0.2-beta.5/dist/nocjs.min.js
 
 ## WIP
 
+Working through these: https://github.com/nature-of-code/noc-examples-p5.js
+
 * Mover 
   * euler integration ✅
   * friction ✅
