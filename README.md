@@ -13,6 +13,16 @@ see versions:
 https://www.npmjs.com/package/nocjs
 
 
+## setup
+
+```
+cd nocjs
+npm install
+npm run start
+```
+
+the library will be served at: `localhost:<PORT>/nocjs.js`
+
 ## WIP
 
 Working through these: https://github.com/nature-of-code/noc-examples-p5.js
