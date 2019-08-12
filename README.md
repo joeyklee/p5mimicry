@@ -45,7 +45,7 @@ Working through these: https://github.com/nature-of-code/noc-examples-p5.js
   * flocking
 * Path 
   * path-simple ✅
-  * path-complex
+  * path-complex ✅
 * Pendulum ✅
 * Spring ✅
 * Particle systems
