@@ -1,5 +1,5 @@
 const DEFAULTS = {
-    speedLimit: 4,
+    speedLimit: 2,
     mass: 40,
     frictionCoefficient: 0.01,
     dragCoefficient: 0.01,
@@ -9,16 +9,17 @@ const DEFAULTS = {
 
 
 class Mover {
-    constructor(x, y, mass){
+    constructor(x, y, mass) {
         this.location = createVector(x, y);
         this.velocity = createVector(0, 0);
-        this.acceleration = createVector(0,0);
+        this.acceleration = createVector(0, 0);
         this.speedLimit = DEFAULTS.speedLimit;
         this.mass = mass || DEFAULTS.mass;
         this.maxForce = DEFAULTS.maxForce;
+        this.debug = false;
     }
 
-    applyFriction(frictionCoefficient){
+    applyFriction(frictionCoefficient) {
         // friction = -1 * N * μ * velocity
         const frictionMag = frictionCoefficient || DEFAULTS.frictionCoefficient
         // fricition is operating in the opposite direction
@@ -27,12 +28,12 @@ class Mover {
         f.normalize();
         // scale the friction by the friction coefficient
         f.mult(frictionCoefficient);
-        
+
         // here we directly apply friction
         this.applyForce(f);
     }
 
-    applyResistance(dragCoefficient){
+    applyResistance(dragCoefficient) {
         // fluid resistance = (the opposite direction of velocity) * speed^2 * drag coefficient
         const f = this.velocity.copy();
 
@@ -44,13 +45,13 @@ class Mover {
         f.normalize();
 
         const dragCoeff = dragCoefficient || DEFAULTS.dragCoefficient;
-        const strength =  dragCoeff * speed * speed;
+        const strength = dragCoeff * speed * speed;
         f.mult(strength);
 
         this.applyForce(f);
     }
 
-    follow(path){
+    follow(path) {
         let predict = this.velocity.copy();
         predict.normalize();
         predict.mult(50); // predict a position 50px ahead
@@ -66,13 +67,13 @@ class Mover {
         let dir = p5.Vector.sub(b, a);
         dir.normalize();
         dir.mult(10); // arbitrary 10 pixels ahead
-        
+
         let target = p5.Vector.add(normalPoint, dir);
 
         // How far away are we from the path?
         let distance = p5.Vector.dist(predictLocation, normalPoint);
         // Only if the distance is greater than the path's radius do we bother to steer
-        
+
         // FROM NOC
         if (distance > path.radius) {
             this.seek(target);
@@ -80,6 +81,83 @@ class Mover {
 
         // Seek always
         // this.seek(target)
+    }
+
+    followComplex(p) {
+
+
+        // Predict location 50 (arbitrary choice) frames ahead
+        // This could be based on speed
+        let predict = this.velocity.copy();
+        predict.normalize();
+        predict.mult(20);
+        let predictLoc = p5.Vector.add(this.location, predict);
+
+        // Now we must find the normal to the path from the predicted location
+        // We look at the normal for each line segment and pick out the closest one
+
+        let normal = null;
+        let target = null;
+        let worldRecord = 1000000; // Start with a very high record distance that can easily be beaten
+
+        // Loop through all points of the path
+        for (let i = 0; i < p.points.length - 1; i++) {
+
+            // Look at a line segment
+            let a = p.points[i];
+            let b = p.points[i + 1];
+            //println(b);
+
+            // Get the normal point to that line
+            let normalPoint = this.getNormalPoint(predictLoc, a, b);
+
+            if (normalPoint.x < min(a.x, b.x) || normalPoint.x > max(a.x, b.x) || normalPoint.y < min(a.y, b.y) || normalPoint.y > max(a.y, b.y)) {
+                normalPoint = b.copy();
+            }
+
+            // How far away are we from the path?
+            let distance = p5.Vector.dist(predictLoc, normalPoint);
+            // Did we beat the record and find the closest line segment?
+            if (distance < worldRecord) {
+                worldRecord = distance;
+                // If so the target we want to steer towards is the normal
+                normal = normalPoint;
+
+                // Look at the direction of the line segment so we can seek a little bit ahead of the normal
+                let dir = p5.Vector.sub(b, a);
+                dir.normalize();
+                // This is an oversimplification
+                // Should be based on distance to path & velocity
+                dir.mult(10);
+                target = normalPoint.copy();
+                target.add(dir);
+            }
+        }
+
+        // Only if the distance is greater than the path's radius do we bother to steer
+        if (worldRecord > p.radius && target !== null) {
+            this.seek(target);
+        }
+
+        // Draw the debugging stuff
+        // const debug = true;
+        if (this.debug) {
+            // Draw predicted future location
+            stroke(255);
+            fill(200);
+            line(this.location.x, this.location.y, predictLoc.x, predictLoc.y);
+            ellipse(predictLoc.x, predictLoc.y, 4, 4);
+
+            // Draw normal location
+            stroke(255);
+            fill(200);
+            ellipse(normal.x, normal.y, 4, 4);
+            // Draw actual target (red if steering towards it)
+            line(predictLoc.x, predictLoc.y, normal.x, normal.y);
+            if (worldRecord > p.radius) fill(255, 0, 0);
+            noStroke();
+            ellipse(target.x, target.y, 8, 8);
+        }
     }
 
     // A function to get the normal point from a point (p) to a line segment (a-b)
@@ -96,14 +174,14 @@ class Mover {
         return normalPoint;
     }
 
-    attract(attractor, locationProp, massProp, attractionConstant){
+    attract(attractor, locationProp, massProp, attractionConstant) {
         // gravitational attraction = (G * m1 * m2) / (distance * distance)
         // get the direction of attraction
-        let lProp = locationProp ||  'location';
+        let lProp = locationProp || 'location';
         let mProp = massProp || attractor.mass;
         const f = p5.Vector.sub(this.location, attractor[lProp])
         // get the distance between those objects
-        let  distance = f.mag();
+        let distance = f.mag();
         let G = attractionConstant || DEFAULTS.G;
         // no matter how close or far, the lowest distance is 5 and highest is 25
         distance = constrain(distance, 5.0, 25.0);
@@ -116,14 +194,14 @@ class Mover {
         return f;
     }
 
-    repel(attractor, locationProp, massProp, attractionConstant){
+    repel(attractor, locationProp, massProp, attractionConstant) {
         // gravitational attraction = (G * m1 * m2) / (distance * distance)
         // get the direction of attraction
-        let lProp = locationProp ||  'location';
+        let lProp = locationProp || 'location';
         let mProp = massProp || attractor.mass;
         const f = p5.Vector.sub(this.location, attractor[lProp])
         // get the distance between those objects
-        let  distance = f.mag();
+        let distance = f.mag();
         let G = attractionConstant || DEFAULTS.G;
         // no matter how close or far, the lowest distance is 5 and highest is 25
         distance = constrain(distance, 5.0, 25.0);
@@ -138,7 +216,7 @@ class Mover {
     }
 
 
-    seek(target){
+    seek(target) {
         const desired = p5.Vector.sub(target, this.location);
 
         // get there as fast as the mover is able...
@@ -151,13 +229,13 @@ class Mover {
         this.applyForce(steer);
     }
 
-    arrive(target){
+    arrive(target) {
         const desired = p5.Vector.sub(target, this.location);
         let d = desired.mag();
 
         // once the mover is w/in 100 pixels
         // scale the max speed down
-        if(d < 100){
+        if (d < 100) {
             let m = map(d, 0, 100, 0, this.speedLimit);
             desired.setMag(m);
         } else {
@@ -172,13 +250,13 @@ class Mover {
         this.applyForce(steer);
     }
 
-    applyForce(force){
+    applyForce(force) {
         // acceleration = force/mass
         const f = p5.Vector.div(force, this.mass);
         this.acceleration.add(f);
     }
 
-    update(){
+    update() {
         // velocity
         this.velocity.add(this.acceleration);
         this.velocity.limit(this.speedLimit);
@@ -190,31 +268,31 @@ class Mover {
 
     checkEdges() {
         if (this.location.x > width - this.mass) {
-          this.location.x = width - this.mass;
-          this.velocity.x *= -1;
+            this.location.x = width - this.mass;
+            this.velocity.x *= -1;
         } else if (this.location.x < this.mass) {
-          this.location.x = this.mass;
-          this.velocity.x *= -1;
+            this.location.x = this.mass;
+            this.velocity.x *= -1;
         }
 
         if (this.location.y > height - this.mass) {
-          this.location.y = height - this.mass;
-          this.velocity.y *= -1;
-        }else if (this.location.y < this.mass) {
-          this.location.y = this.mass;
-          this.velocity.y *= -1;
+            this.location.y = height - this.mass;
+            this.velocity.y *= -1;
+        } else if (this.location.y < this.mass) {
+            this.location.y = this.mass;
+            this.velocity.y *= -1;
         }
-      }
+    }
 
 
 
-    display(){
+    display() {
         const angle = this.velocity.heading();
         push();
         translate(this.location.x, this.location.y);
         rotate(angle);
-        ellipse(0, 0, this.mass/2, this.mass/2);
-        line(0,0, this.mass/2, 0);
+        ellipse(0, 0, this.mass / 2, this.mass / 2);
+        line(0, 0, this.mass / 2, 0);
         pop();
     }
 }
