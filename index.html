@@ -1,0 +1,175 @@
+<html>
+    <head>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.sound.min.js"></script>
+            <script src="https://unpkg.com/nocjs@latest/dist/nocjs.min.js"></script>
+
+            <link href="https://fonts.googleapis.com/css?family=Leckerli+One|Playfair+Display&display=swap" rel="stylesheet"> 
+
+            <style>
+                *{
+                    margin:0;
+                    box-sizing: border-box;
+                    font-size:16px;
+                }
+
+                html, body{
+                    width: 100%;
+                    height:100%;
+                }
+
+                #app{
+                    width:100%;
+                    height:100%;
+                    padding:1rem;
+                    display: flex;
+                    flex-direction:column;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 10000;
+                }
+
+                #app > header {
+                    display:flex;
+                    flex-direction:column;
+                    justify-content: center;
+                    align-items: center;
+                    text-align:center;
+                }
+                #app > header > h1 {
+                    font-size:6rem;
+                    font-family: 'Leckerli One', cursive;
+                    text-align:center;
+                }
+
+                #app > header > h2{
+                    margin-top:1.6rem;
+                    border: 0.2rem solid black;
+                    padding:0.25rem 0.5rem;
+                }
+
+                #app > header > h2:hover{
+                    background-color: rgba(244, 208, 63)
+                }
+                
+
+                #app > header > h2 > a {
+                    font-size:1.8rem;
+                    font-family: 'Playfair Display', serif;
+                    text-align:center;
+                }
+
+                #app > header > p {
+                    margin-top:1.6rem;
+                    font-size:1.2rem;
+                    font-family: 'Leckerli One', cursive;
+                    text-align:center;
+                    max-width:200px;
+                    
+                }
+
+                #sketch{
+                    position:fixed;
+                    z-index: -1;
+                }
+
+                a, a:visited{
+                    text-decoration: none;
+                    color:black;
+                }
+                
+            </style>
+    </head>
+    <div id="app">
+        <header>
+            <h1>noc.js</h1>
+            <!-- <p>A javascript library based on Dan Shiffman's Nature of Code</p> -->
+            <h2> <a href="https://joeyklee.github.io/nocjs/docs">get started</a> </h2>
+        </header>
+        <div id="sketch">
+
+        </div>
+    </div>
+    <script>
+
+        let movers = [];
+        let target;
+        let movingTarget;
+        let repeller;
+        let angle = 0;
+        let canvas;
+        function setup() {
+            canvas = createCanvas(displayWidth, displayHeight).parent('#sketch');
+            
+            movers = [... new Array(100).fill(null)].map( item => {
+                let x = random(width*0.25, width*0.75);
+                let y = random(height*0.25, height*0.75)
+                let m =  new nocjs.Mover(x, y, 10 )
+                m.maxForce = 10;
+                return m;
+            });
+
+            movingTarget  = new nocjs.Mover(width/2, height/2 - 150, 40);
+            target = new nocjs.Mover(width/2, height/2, 50);
+            repeller = new nocjs.Mover(width/2, height/2, 40);
+            background(230)
+        }
+
+        function draw() {
+            background(230, 230, 230, 40);
+
+            let speed = 2;
+            if(randomGaussian() > 0.5){
+                
+                speed = 16
+                
+                movers.forEach( (mover,idx) => {
+                    const repulsion =  movingTarget.repel(mover, 'location', 'mass', 2);
+                    mover.applyForce(repulsion);
+                });
+            } else {
+                speed = 4;   
+            }
+            
+            if(frameCount%speed === 0){
+                
+                angle+= 0.1
+                let targetX =  movingTarget.location.x + cos(angle) * 20
+                let targetY = movingTarget.location.y + sin(angle) * 20
+                movingTarget.location.set(targetX, targetY);
+            }
+            
+
+            // ellipse(movingTarget.location.x, movingTarget.location.y, 50, 50);
+
+            if(mouseIsPressed){
+                target.location.set( mouseX, mouseY )
+                movers.forEach( (mover,idx) => {
+                    const repulsion =  target.repel(mover, 'location', 'mass', 10);
+                    mover.applyForce(repulsion);
+                });
+            }
+
+            movers.forEach( (mover,idx) => {
+                const repulsion = repeller.repel(mover, 'location', 'mass', 2)
+                mover.applyForce(repulsion);
+                mover.seek(movingTarget.location);
+                mover.update();
+                mover.checkEdges();
+                // mover.display();
+                if(idx%2){
+                    stroke(231, 76, 60)
+                } else if(idx %3){
+                    stroke(52, 152, 219)
+                } else {
+                    stroke( 244, 208, 63)
+                }
+
+
+                line(mover.location.x, mover.location.y, mover.location.x + cos(frameCount/15) *10, mover.location.y + sin(frameCount/15) *10 )
+            })
+        }
+
+    </script>
+</html>
