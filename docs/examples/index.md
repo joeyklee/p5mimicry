@@ -3,19 +3,19 @@
 see:
 
 ## Mover
-* [mover_arrive](examples/mover_arrive)
-* [mover_attract](examples/mover_attract)
-* [mover_followPathComplex](examples/mover_followPathComplex)
-* [mover_followPathSimple](examples/mover_followPathSimple)
-* [mover_friction](examples/mover_friction)
-* [mover_repel](examples/mover_repel)
-* [mover_resistance](examples/mover_resistance)
-* [mover_seek](examples/mover_seek)
+* [mover_arrive](https://joeyklee.github.io/nocjs/examples/mover_arrive)
+* [mover_attract](https://joeyklee.github.io/nocjs/examples/mover_attract)
+* [mover_followPathComplex](https://joeyklee.github.io/nocjs/examples/mover_followPathComplex)
+* [mover_followPathSimple](https://joeyklee.github.io/nocjs/examples/mover_followPathSimple)
+* [mover_friction](https://joeyklee.github.io/nocjs/examples/mover_friction)
+* [mover_repel](https://joeyklee.github.io/nocjs/examples/mover_repel)
+* [mover_resistance](https://joeyklee.github.io/nocjs/examples/mover_resistance)
+* [mover_seek](https://joeyklee.github.io/nocjs/examples/mover_seek)
 
 ## Pendulum
-* [pendulum](examples/pendulum)
-* [pendulum_interactive](examples/pendulum_interactive)
+* [pendulum](https://joeyklee.github.io/nocjs/examples/pendulum)
+* [pendulum_interactive](https://joeyklee.github.io/nocjs/examples/pendulum_interactive)
 
 ## Spring
-* [spring](examples/spring)
-* [spring_interactive](examples/spring_interactive)
+* [spring](https://joeyklee.github.io/nocjs/examples/spring)
+* [spring_interactive](https://joeyklee.github.io/nocjs/examples/spring_interactive)
