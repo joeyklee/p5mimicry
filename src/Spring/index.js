@@ -110,7 +110,7 @@ class Bob {
         // ellipse(this.location.x, this.location.y, this.mass * 2, this.mass * 2);
     }
 
-    handleClick(mx, my) {
+    clicked(mx, my) {
         let d = dist(mx, my, this.location.x, this.location.y);
         if (d < this.mass) {
             this.dragging = true;
@@ -123,7 +123,7 @@ class Bob {
         this.dragging = false;
     }
 
-    handleDrag(mx, my) {
+    drag(mx, my) {
         if (this.dragging) {
             this.location.x = mx + this.dragOffset.x;
             this.location.y = my + this.dragOffset.y;
