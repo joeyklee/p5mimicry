@@ -2,6 +2,10 @@
 
 **WIP Please ignore**
 
+## See Docs
+
+* [docs](https://joeyklee.github.io/nocjs/docs/#/)
+
 ## cdn
 
 beta:
