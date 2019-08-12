@@ -10,8 +10,8 @@
     "pack": "npm pack",
     "build": "webpack --config webpack.config.babel.js",
     "publish:npm": "npm run build && npm publish",
-    "publish:gh": "npm run build:main && npm run build:umd && git tag $npm_package_version && git push origin master && git push --tags",
-    "publish:npm-beta": "npm run build:main && npm run build:umd && npm publish --tag beta"
+    "publish:gh": "npm run build && git tag $npm_package_version && git push origin master && git push --tags",
+    "publish:npm-beta": "npm run build && npm publish --tag beta"
   },
   "repository": {
     "type": "git",
