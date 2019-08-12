@@ -6,7 +6,7 @@
 
 beta:
 ```
-https://unpkg.com/nocjs@0.0.2-beta.5/dist/nocjs.min.js
+https://unpkg.com/nocjs@latest/dist/nocjs.min.js
 ```
 
 see versions:
