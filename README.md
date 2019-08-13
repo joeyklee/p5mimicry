@@ -2,6 +2,8 @@
 
 **WIP Please ignore**
 
+![](assets/images/home-01.png)
+
 ## See Docs
 
 * [docs](https://joeyklee.github.io/nocjs/docs/#/)
