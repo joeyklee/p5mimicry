@@ -1,6 +1,6 @@
 # Examples
 
-see:
+The examples below correspond to various functions of each of the nocjs `class`es. Build upon them, remix them, and explore them for your creative projects!
 
 ## Mover
 * [mover_arrive](https://joeyklee.github.io/nocjs/examples/mover_arrive)

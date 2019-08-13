@@ -42,32 +42,37 @@
                     font-size:6rem;
                     font-family: 'Leckerli One', cursive;
                     text-align:center;
+                    text-shadow:2px 2px  rgba(220, 220, 220, 1);
                 }
 
-                #app > header > h2{
+                #app > header > p{
                     margin-top:1.6rem;
-                    border: 0.2rem solid black;
-                    padding:0.25rem 0.5rem;
+                    border: 0.16rem solid black;
+                    padding:0.35rem 0.5rem;
+                    background-color: rgba(  232, 218, 239 ,1);
                 }
 
-                #app > header > h2:hover{
-                    background-color: rgba(244, 208, 63)
+                
+
+                #app > header > h2 {
+                    margin-top:1.6rem;
+                    font-size:1.3rem;
+                    font-family: 'Playfair Display', serif;
+                    text-align:center;
+                    max-width:280px;
+                    font-weight:200; 
+                }
+
+                #app > header > p:hover{
+                    background-color: rgba(244, 208, 63, 1)
                 }
                 
 
-                #app > header > h2 > a {
-                    font-size:1.8rem;
+                #app > header > p > a {
+                    font-size:0.8rem;
                     font-family: 'Playfair Display', serif;
                     text-align:center;
-                }
-
-                #app > header > p {
-                    margin-top:1.6rem;
-                    font-size:1.2rem;
-                    font-family: 'Leckerli One', cursive;
-                    text-align:center;
-                    max-width:200px;
-                    
+                    font-weight: 100;
                 }
 
                 #sketch{
@@ -85,8 +90,8 @@
     <div id="app">
         <header>
             <h1>noc.js</h1>
-            <!-- <p>A javascript library based on Dan Shiffman's Nature of Code</p> -->
-            <h2> <a href="https://joeyklee.github.io/nocjs/docs">get started</a> </h2>
+            <h2>A javascript library for <br> Nature of Code</h2>
+            <p> <a href="https://joeyklee.github.io/nocjs/docs">get started</a> </p>
         </header>
         <div id="sketch">
 
@@ -96,53 +101,39 @@
 
         let movers = [];
         let target;
-        let movingTarget;
-        let repeller;
+        // let repeller;
+        let repellers = [];
         let angle = 0;
         let canvas;
         function setup() {
-            canvas = createCanvas(displayWidth, displayHeight).parent('#sketch');
+            randomSeed(4)
+            canvas = createCanvas(windowWidth, windowHeight).parent('#sketch');
             
             movers = [... new Array(100).fill(null)].map( item => {
                 let x = random(width*0.25, width*0.75);
                 let y = random(height*0.25, height*0.75)
                 let m =  new nocjs.Mover(x, y, 10 )
                 m.maxForce = 10;
+                m.seedLimit = 10;
                 return m;
             });
 
-            movingTarget  = new nocjs.Mover(width/2, height/2 - 150, 40);
-            target = new nocjs.Mover(width/2, height/2, 50);
-            repeller = new nocjs.Mover(width/2, height/2, 40);
-            background(230)
+            repellers = [... new Array(20).fill(null)].map( item => {
+                let x = random(width*0.25, width*0.75);
+                let y = random(height*0.25, height*0.75)
+                let m =  new nocjs.Mover(x, y, random(100) )
+                return m;
+            });
+
+            // movingTarget  = new nocjs.Mover(width/2, height/2 - 150, 40);
+            target = new nocjs.Mover(width/2, height/2, 100);
+            // repeller = new nocjs.Mover(width/2, height/2, 40);
+            background(243)
         }
 
         function draw() {
-            background(230, 230, 230, 40);
+            background(243, 243, 243, 2);
 
-            let speed = 2;
-            if(randomGaussian() > 0.5){
-                
-                speed = 16
-                
-                movers.forEach( (mover,idx) => {
-                    const repulsion =  movingTarget.repel(mover, 'location', 'mass', 2);
-                    mover.applyForce(repulsion);
-                });
-            } else {
-                speed = 4;   
-            }
-            
-            if(frameCount%speed === 0){
-                
-                angle+= 0.1
-                let targetX =  movingTarget.location.x + cos(angle) * 20
-                let targetY = movingTarget.location.y + sin(angle) * 20
-                movingTarget.location.set(targetX, targetY);
-            }
-            
-
-            // ellipse(movingTarget.location.x, movingTarget.location.y, 50, 50);
 
             if(mouseIsPressed){
                 target.location.set( mouseX, mouseY )
@@ -153,12 +144,15 @@
             }
 
             movers.forEach( (mover,idx) => {
-                const repulsion = repeller.repel(mover, 'location', 'mass', 2)
-                mover.applyForce(repulsion);
-                mover.seek(movingTarget.location);
+                repellers.forEach(repeller => {
+                    const repulsion = repeller.attract(mover, 'location', 'mass', 0.01)
+                    mover.applyForce(repulsion);
+
+                })
+                
                 mover.update();
                 mover.checkEdges();
-                // mover.display();
+
                 if(idx%2){
                     stroke(231, 76, 60)
                 } else if(idx %3){
@@ -167,9 +161,12 @@
                     stroke( 244, 208, 63)
                 }
 
-
-                line(mover.location.x, mover.location.y, mover.location.x + cos(frameCount/15) *10, mover.location.y + sin(frameCount/15) *10 )
+                line(mover.location.x, mover.location.y, mover.location.x + cos(frameCount/30) *10, mover.location.y + sin(frameCount/30) *10 )
             })
+
+            // repellers.forEach(repeller => {
+            //        repeller.display();
+            // })
         }
 
     </script>
