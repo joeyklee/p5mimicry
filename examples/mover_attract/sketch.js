@@ -4,8 +4,8 @@ let attractor;
 function setup(){
     createCanvas(480, 360);
 
-    mover = new nocjs.Mover(10, 10, 30);
-    attractor =  new nocjs.Mover(width/2, height/2, 80);
+    mover = new noc.Mover(10, 10, 30);
+    attractor =  new noc.Mover(width/2, height/2, 80);
 }
 
 function draw(){
