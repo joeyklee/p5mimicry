@@ -110,9 +110,7 @@
             movers = [... new Array(100).fill(null)].map( item => {
                 let x = random(width*0.25, width*0.75);
                 let y = random(height*0.25, height*0.75)
-                let m =  new nocjs.Mover(x, y, 10 )
-                m.maxForce = 10;
-                m.seedLimit = 10;
+                let m =  new nocjs.Mover(x, y, 10, {maxForce: 0.5, maxSpeed:1.8} )
                 return m;
             });
 

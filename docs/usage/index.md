@@ -5,23 +5,24 @@ Here you'll find the documentation for the `class`es and functions that are avai
 ## Mover
 
 ```js
-new nocjs.Mover(x?, y?, mass?)
+new nocjs.Mover(x?, y?, mass?, options?)
 ```
 
 **Parameters**
 * **x**: the starting x location
 * **y**: the starting y location
 * **mass**: the mass of the Mover
+* options?: options param for options
 
-**Defaults**
+**Defaults/Options**
 ```js
 const DEFAULTS = {
-    maxSpeed: 2,
     mass: 40,
     frictionCoefficient: 0.01,
     dragCoefficient: 0.01,
     G: 0.4,
-    maxForce: 0.2
+    maxForce: 0.2,
+    maxSpeed: 2,
 }
 ```
 
@@ -153,7 +154,7 @@ const DEFAULTS = {
 ## Pendulum
 
 ```js
-new nocjs.Pendulum()
+new nocjs.Pendulum(x, y, armLength, bobRadius, options ={})
 ```
 
 docs coming soon
@@ -162,7 +163,7 @@ docs coming soon
 ## Spring
 
 ```js
-new nocjs.Spring()
+new nocjs.Spring(x, y, length, options = {}, bobOptions = {})
 ```
 
 docs coming soon
