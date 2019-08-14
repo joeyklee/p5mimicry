@@ -153,7 +153,7 @@ const DEFAULTS = {
 **.separate(Movers?)**
 > separates the given movers
 ```js
-.checkEdges()
+.separate(Movers?)
 ```
 **Parameters**:
 * Movers: an array of Mover 
