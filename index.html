@@ -111,20 +111,20 @@
             movers = [... new Array(100).fill(null)].map( item => {
                 let x = random(width*0.25, width*0.75);
                 let y = random(height*0.25, height*0.75)
-                let m =  new noc.Mover(x, y, 10, {maxForce: 0.5, maxSpeed:1.8} )
+                let m =  new nocjs.Mover(x, y, 10, {maxForce: 0.5, maxSpeed:1.8} )
                 return m;
             });
 
             repellers = [... new Array(20).fill(null)].map( item => {
                 let x = random(width*0.25, width*0.75);
                 let y = random(height*0.25, height*0.75)
-                let m =  new noc.Mover(x, y, random(100) )
+                let m =  new nocjs.Mover(x, y, random(100) )
                 return m;
             });
 
-            // movingTarget  = new noc.Mover(width/2, height/2 - 150, 40);
-            target = new noc.Mover(width/2, height/2, 100);
-            // repeller = new noc.Mover(width/2, height/2, 40);
+            // movingTarget  = new nocjs.Mover(width/2, height/2 - 150, 40);
+            target = new nocjs.Mover(width/2, height/2, 100);
+            // repeller = new nocjs.Mover(width/2, height/2, 40);
             background(243)
         }
 

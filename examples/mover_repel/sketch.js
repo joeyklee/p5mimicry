@@ -4,8 +4,8 @@ let repeller;
 function setup(){
     createCanvas(480, 360);
 
-    mover = new noc.Mover(width/2, height/2, 30);
-    repeller =  new noc.Mover(width/2, height/2, 80);
+    mover = new nocjs.Mover(width/2, height/2, 30);
+    repeller =  new nocjs.Mover(width/2, height/2, 80);
 }
 
 function draw(){
