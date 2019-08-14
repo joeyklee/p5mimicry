@@ -16,7 +16,7 @@ new nocjs.Mover(x?, y?, mass?)
 **Defaults**
 ```js
 const DEFAULTS = {
-    speedLimit: 2,
+    maxSpeed: 2,
     mass: 40,
     frictionCoefficient: 0.01,
     dragCoefficient: 0.01,

@@ -2,9 +2,7 @@
 let mover;
 function setup(){
     createCanvas(480, 360);
-
-    mover = new nocjs.Mover(width/2, height/2, 40);
-    mover.maxForce = 1.5;
+    mover = new nocjs.Mover(width/2, height/2, 40, {maxForce: 1.5});
 }
 
 function draw(){

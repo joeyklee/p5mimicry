@@ -1,27 +1,35 @@
 const DEFAULTS = {
-    speedLimit: 2,
     mass: 40,
     frictionCoefficient: 0.01,
     dragCoefficient: 0.01,
     G: 0.4,
-    maxForce: 0.2
+    maxForce: 0.2,
+    maxSpeed: 2,
+    debug: false,
 }
 
 
 class Mover {
-    constructor(x, y, mass) {
+    constructor(x, y, mass, options = {}) {
+        options = (typeof options !== 'undefined') ?  options : {};
+
         this.location = createVector(x, y);
         this.velocity = createVector(0, 0);
         this.acceleration = createVector(0, 0);
-        this.speedLimit = DEFAULTS.speedLimit;
-        this.mass = mass || DEFAULTS.mass;
-        this.maxForce = DEFAULTS.maxForce;
-        this.debug = false;
+
+        this.mass = mass || options.mass || DEFAULTS.mass;
+        this.maxForce =  options.maxForce || DEFAULTS.maxForce;
+        this.maxSpeed = options.maxSpeed || DEFAULTS.maxSpeed;
+        this.frictionCoefficient = options.frictionCoefficient || DEFAULTS.frictionCoefficient;
+        this.dragCoefficient = options.dragCoefficient || DEFAULTS.dragCoefficient;
+        this.G = options.G || DEFAULTS.G;
+
+        this.debug = options.debug || DEFAULTS.debug;
     }
 
     applyFriction(frictionCoefficient) {
         // friction = -1 * N * μ * velocity
-        const frictionMag = frictionCoefficient || DEFAULTS.frictionCoefficient
+        const frictionMag = frictionCoefficient || this.frictionCoefficient
         // fricition is operating in the opposite direction
         const f = this.velocity.copy();
         f.mult(-1);
@@ -44,7 +52,7 @@ class Mover {
         // normalize;
         f.normalize();
 
-        const dragCoeff = dragCoefficient || DEFAULTS.dragCoefficient;
+        const dragCoeff = dragCoefficient || this.dragCoefficient;
         const strength = dragCoeff * speed * speed;
         f.mult(strength);
 
@@ -220,7 +228,7 @@ class Mover {
         const desired = p5.Vector.sub(target, this.location);
 
         // get there as fast as the mover is able...
-        desired.setMag(this.speedLimit);
+        desired.setMag(this.maxSpeed);
 
         // steering = desired location minus the velocity;
         const steer = p5.Vector.sub(desired, this.velocity);
@@ -236,11 +244,11 @@ class Mover {
         // once the mover is w/in 100 pixels
         // scale the max speed down
         if (d < 100) {
-            let m = map(d, 0, 100, 0, this.speedLimit);
+            let m = map(d, 0, 100, 0, this.maxSpeed);
             desired.setMag(m);
         } else {
             // get there as fast as the mover is able...
-            desired.setMag(this.speedLimit);
+            desired.setMag(this.maxSpeed);
         }
 
         // steering = desired location minus the velocity;
@@ -259,7 +267,7 @@ class Mover {
     update() {
         // velocity
         this.velocity.add(this.acceleration);
-        this.velocity.limit(this.speedLimit);
+        this.velocity.limit(this.maxSpeed);
         // location
         this.location.add(this.velocity);
         // reset the acceleration on each iteration
