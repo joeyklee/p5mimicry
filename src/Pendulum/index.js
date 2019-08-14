@@ -1,21 +1,28 @@
+const DEFAULTS = {
+    angle: Math.PI / 4,
+    aVelocity: 0.0,
+    aAcceleration: 0.0,
+    damping: 0.995,
+    gravity: 0.4,
+    bobRadius: 20,
+    r: 100,
+}
+
 class Pendulum {
-    constructor(x, y, armLength, bobRadius) {
+    constructor(x, y, armLength, bobRadius, options ={}) {
+        options = (typeof options !== 'undefined') ? options : {};
         // location of the origin of the pendulum
         this.location = createVector(x, y);
         // the boblocation
         this.bob = createVector(0, 0);
-        this.angle = PI / 4;
-
-        // angular values
-        this.aVelocity = 0.0;
-        this.aAcceleration = 0.0;
-        this.damping = 0.995;
-        this.gravity = 0.4;
-
+        this.angle = options.angle || DEFAULTS.angle;
+        this.aVelocity =  options.aVelocity || DEFAULTS.aVelocity;
+        this.aAcceleration =  options.aAcceleration || DEFAULTS.aAcceleration;
+        this.damping = options.damping || DEFAULTS.damping;
+        this.gravity =  options.gravity || DEFAULTS.gravity;
+        this.bobRadius = bobRadius || DEFAULTS.bobRadius;
+        this.r = armLength || options.r || DEFAULTS.r;
         this.dragging = false;
-        
-        this.bobRadius = bobRadius || 20;
-        this.r = armLength;
     }
 
     go() {

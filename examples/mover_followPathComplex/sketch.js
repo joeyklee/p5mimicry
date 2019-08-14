@@ -9,7 +9,7 @@ let coords = [[23, 26],[265, 96],[451, 28],[379, 167],[439, 326],[229, 225],[32,
 function setup(){
     createCanvas(480, 360);
 
-    mover = new nocjs.Mover(10, 10, 40, {maxForce:5});
+    mover = new nocjs.Mover(10, 10, 40, {maxForce:5, debug:true});
 
     path = new nocjs.PathComplex(2);
     coords.forEach(coord => {path.addPoint(coord[0], coord[1])})

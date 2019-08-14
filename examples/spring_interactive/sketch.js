@@ -2,7 +2,7 @@
 let spring;
 function setup(){
     createCanvas(480, 360);
-    spring = new nocjs.Spring(width/2, 20, 100);
+    spring = new nocjs.Spring(width/2, 20, 100, {k: 0.75}, {mass: 100});
 }
 
 function draw(){

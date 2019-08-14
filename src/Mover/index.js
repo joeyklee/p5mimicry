@@ -10,7 +10,7 @@ const DEFAULTS = {
 
 
 class Mover {
-    constructor(x, y, mass, options = {}) {
+    constructor(x, y, mass, options) {
         options = (typeof options !== 'undefined') ?  options : {};
 
         this.location = createVector(x, y);

@@ -1,12 +1,28 @@
+const DEFAULTS = {
+    k: 0.2,
+    minConstraint: 30,
+    maxConstraint: 200,
+}
+
+const BOB_DEFAULTS = {
+        mass: 40,
+        // Arbitrary damping to simulate friction / drag
+        damping: 0.98,
+        G: 2
+}
+
 class Spring {
-    constructor(x, y, length) {
+    constructor(x, y, length, options = {}, bobOptions = {}) {
+        options = (typeof options !== 'undefined') ? options : {};
+        bobOptions = (typeof bobOptions !== 'undefined') ? bobOptions : {};
+
         this.anchor = createVector(x, y);
         this.restLength = length;
-        this.k = 0.2;
-        this.minConstraint = 30;
-        this.maxConstraint = 200;
+        this.k = options.k || DEFAULTS.k;
+        this.minConstraint = options.minConstraint || DEFAULTS.minConstraint;
+        this.maxConstraint = options.maxConstraint || DEFAULTS.maxConstraint;
 
-        this.bob = new Bob(x, y + length);
+        this.bob = new Bob(x, y + length, bobOptions);
     }
 
     connect() {
@@ -66,17 +82,20 @@ class Spring {
 }
 
 class Bob {
-    constructor(x, y) {
+    constructor(x, y, bobOptions) {
+        bobOptions = (typeof bobOptions !== 'undefined') ? bobOptions : {};
+
         this.location = createVector(x, y);
         this.velocity = createVector();
         this.acceleration = createVector();
-        this.mass = 40;
+        this.mass = bobOptions.mass || BOB_DEFAULTS.mass;
         // Arbitrary damping to simulate friction / drag
-        this.damping = 0.98;
+        this.damping = bobOptions.damping || BOB_DEFAULTS.damping;
+        this.G = bobOptions.G || BOB_DEFAULTS.G;
         // For user interaction
         this.dragOffset = createVector();
+        this.gravity = createVector(0, this.G);
         this.dragging = false;
-        this.gravity = createVector(0, 2);
     }
     // Standard Euler integration
     update() {
