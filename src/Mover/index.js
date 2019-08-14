@@ -6,22 +6,24 @@ const DEFAULTS = {
     maxForce: 0.2,
     maxSpeed: 2,
     debug: false,
+    separationDistance: 40
 }
 
 
 class Mover {
     constructor(x, y, mass, options) {
-        options = (typeof options !== 'undefined') ?  options : {};
+        options = (typeof options !== 'undefined') ? options : {};
 
         this.location = createVector(x, y);
         this.velocity = createVector(0, 0);
         this.acceleration = createVector(0, 0);
 
         this.mass = mass || options.mass || DEFAULTS.mass;
-        this.maxForce =  options.maxForce || DEFAULTS.maxForce;
+        this.maxForce = options.maxForce || DEFAULTS.maxForce;
         this.maxSpeed = options.maxSpeed || DEFAULTS.maxSpeed;
         this.frictionCoefficient = options.frictionCoefficient || DEFAULTS.frictionCoefficient;
         this.dragCoefficient = options.dragCoefficient || DEFAULTS.dragCoefficient;
+        this.separationDistance = options.separationDistance || this.mass/2 || DEFAULTS.separationDistance;
         this.G = options.G || DEFAULTS.G;
 
         this.debug = options.debug || DEFAULTS.debug;
@@ -92,8 +94,6 @@ class Mover {
     }
 
     followComplex(p) {
-
-
         // Predict location 50 (arbitrary choice) frames ahead
         // This could be based on speed
         let predict = this.velocity.copy();
@@ -257,6 +257,78 @@ class Mover {
 
         this.applyForce(steer);
     }
+
+    // Separation
+  // Method checks for nearby vehicles and steers away
+  separate(vehicles) {
+    let desiredseparation = this.separationDistance;
+    let sum = createVector();
+    let count = 0;
+    // For every boid in the system, check if it's too close
+    for (let i = 0; i < vehicles.length; i++) {
+      let d = p5.Vector.dist(this.location, vehicles[i].location);
+      // If the distance is greater than 0 and less than an arbitrary amount (0 when you are yourself)
+      if ((d > 0) && (d < desiredseparation)) {
+        // Calculate vector pointing away from neighbor
+        let diff = p5.Vector.sub(this.location, vehicles[i].location);
+        diff.normalize();
+        diff.div(d); // Weight by distance
+        sum.add(diff);
+        count++; // Keep track of how many
+      }
+    }
+    // Average -- divide by how many
+    if (count > 0) {
+      sum.div(count);
+      // Our desired vector is the average scaled to maximum speed
+      sum.normalize();
+      sum.mult(this.maxSpeed);
+      // Implement Reynolds: Steering = Desired - Velocity
+      sum.sub(this.velocity);
+      sum.limit(this.maxForce);
+    }
+    return sum;
+    }
+
+    // separate(movers){
+    //     const desiredSeparation = this.mass;
+    //     const sum = createVector();
+    //     let steer = createVector();
+    //     let count = 0;
+
+    //     // for every mover in the system check if it is too close
+    //     movers.forEach( (mover, i) => {
+    //         const d = p5.Vector.dist(this.location, mover.location);
+    //         // don't calc if for your yourself.
+    //         if( (d > 0) && ( d < desiredSeparation) ){
+    //             // calculate the vector pointed away from the neighbor
+    //             const diff = p5.Vector.sub(this.location, mover.position);
+    //             diff.normalize();
+    //             diff.div(d); // weight by distance
+
+    //             sum.add(diff);
+    //             count++; // keep track of how many
+    //         }
+    //     });
+
+    //     if (count > 0){
+    //         sum.div(count);
+    //         // our desired vector is the avg scaled to max speed
+    //         sum.normalize();
+    //         sum.mult(this.maxSpeed);
+
+    //         // Implement Reynolds: Steering = Desired - Velocity
+    //         // TODO: could this just be this.seek() or this.arrive()?
+    //         // steer = p5.Vector.sub(sum, this.velocity);
+    //         // steer.limit(this.maxForce);
+    //         // this.applyForce(steer);
+
+    //         sum.sub(this.velocity)
+    //         sum.limit(this.maxForce)
+
+    //     }
+    //     return {separationForce:sum, steeringForce:steer};
+    // }
 
     applyForce(force) {
         // acceleration = force/mass

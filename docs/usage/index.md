@@ -150,6 +150,16 @@ const DEFAULTS = {
 **Parameters**:
 * none
 
+**.separate(Movers?)**
+> separates the given movers
+```js
+.checkEdges()
+```
+**Parameters**:
+* Movers: an array of Mover 
+**Returns**:
+* vector: a separation force. Use .applyForce() on the return value to apply that force.
+
 
 ## Pendulum
 
