@@ -11,6 +11,7 @@ The examples below correspond to various functions of each of the nocjs `class`e
 * [mover_repel](https://joeyklee.github.io/nocjs/examples/mover_repel)
 * [mover_resistance](https://joeyklee.github.io/nocjs/examples/mover_resistance)
 * [mover_seek](https://joeyklee.github.io/nocjs/examples/mover_seek)
+* [mover_separate](https://joeyklee.github.io/nocjs/examples/mover_separate)
 
 ## Pendulum
 * [pendulum](https://joeyklee.github.io/nocjs/examples/pendulum)
