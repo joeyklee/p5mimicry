@@ -51,7 +51,7 @@ Include the latest nocjs.js and p5.js versions into your `index.html` file, then
     let mover;
     function setup(){
         createCanvas(480, 360);
-        mover = new nocjs.Mover(width/2, height/2, 40);
+        mover = new noc.Mover(width/2, height/2, 40);
     }
     function draw(){
         background(220);

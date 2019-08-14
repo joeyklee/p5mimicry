@@ -2,7 +2,7 @@
 let movers = [];
 function setup(){
     createCanvas(480, 360);
-    movers = [... new Array(20).fill(null)].map( item => new nocjs.Mover(random(width), random(height), 20, {maxForce: 4, maxSpeed: 2}))
+    movers = [... new Array(20).fill(null)].map( item => new noc.Mover(random(width), random(height), 20, {maxForce: 4, maxSpeed: 2}))
 }
 
 function draw(){

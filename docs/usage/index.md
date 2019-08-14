@@ -5,7 +5,7 @@ Here you'll find the documentation for the `class`es and functions that are avai
 ## Mover
 
 ```js
-new nocjs.Mover(x?, y?, mass?, options?)
+new noc.Mover(x?, y?, mass?, options?)
 ```
 
 **Parameters**
@@ -166,7 +166,7 @@ const DEFAULTS = {
 ## Pendulum
 
 ```js
-new nocjs.Pendulum(x, y, armLength, bobRadius, options ={})
+new noc.Pendulum(x, y, armLength, bobRadius, options ={})
 ```
 
 docs coming soon
@@ -175,7 +175,7 @@ docs coming soon
 ## Spring
 
 ```js
-new nocjs.Spring(x, y, length, options = {}, bobOptions = {})
+new noc.Spring(x, y, length, options = {}, bobOptions = {})
 ```
 
 docs coming soon
@@ -184,7 +184,7 @@ docs coming soon
 ## Path
 
 ```js
-new nocjs.Path()
+new noc.Path()
 ```
 
 docs coming soon
@@ -192,7 +192,7 @@ docs coming soon
 ## PathComplex
 
 ```js
-new nocjs.PathComplex()
+new noc.PathComplex()
 ```
 
 docs coming soon

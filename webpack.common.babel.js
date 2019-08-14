@@ -14,7 +14,7 @@ export default {
     publicPath: '/',
     libraryTarget: 'umd',
     filename: 'nocjs.js',
-    library: 'nocjs',
+    library: 'noc',
   },
   module: {
     rules: [

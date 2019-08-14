@@ -6,10 +6,10 @@ function setup() {
     createCanvas(480, 360);
     randomSeed(3);
 
-    // movers[0] = new nocjs.Mover(width/2, 10, 40);
-    // movers[1] = new nocjs.Mover(20, 10, 40);
+    // movers[0] = new noc.Mover(width/2, 10, 40);
+    // movers[1] = new noc.Mover(20, 10, 40);
 
-    movers = [...new Array(50).fill(null)].map(item => new nocjs.Mover(random(width), 10, 30, {maxSpeed:4}))
+    movers = [...new Array(50).fill(null)].map(item => new noc.Mover(random(width), 10, 30, {maxSpeed:4}))
 
     frictionArea = new FrictionArea(width / 2, height / 2, 100);
 
