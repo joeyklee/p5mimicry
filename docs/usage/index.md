@@ -23,6 +23,8 @@ const DEFAULTS = {
     G: 0.4,
     maxForce: 0.2,
     maxSpeed: 2,
+    debug: false,
+    separationDistance: 40
 }
 ```
 
