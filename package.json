@@ -1,6 +1,6 @@
 {
-  "name": "noc",
-  "version": "0.0.8",
+  "name": "nocjs",
+  "version": "0.0.9",
   "description": "",
   "main": "dist/nocjs.min.js",
   "scripts": {
