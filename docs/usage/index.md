@@ -162,6 +162,16 @@ const DEFAULTS = {
 **Returns**:
 * vector: a separation force. Use .applyForce() on the return value to apply that force.
 
+**.contain(vector?, containerWidth, containerHeight)**
+> contains the mover
+```js
+.contain(vector, containerWidth, containerHeight)
+```
+**Parameters**:
+* vector: a p5.Vector object specifying the center of the container
+* containerWidth: the container width from center
+* containerHeight: the container height from center
+
 
 ## Pendulum
 
