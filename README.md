@@ -108,7 +108,7 @@ Working through these: https://github.com/nature-of-code/noc-examples-p5.js
   * arrive ✅
   * path-following ✅
   * stay-within-walls
-  * flow field
+  * flow field ✅
   * separation ✅
   * flocking
 * Path 

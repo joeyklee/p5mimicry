@@ -23,7 +23,7 @@ class Mover {
         this.maxSpeed = options.maxSpeed || DEFAULTS.maxSpeed;
         this.frictionCoefficient = options.frictionCoefficient || DEFAULTS.frictionCoefficient;
         this.dragCoefficient = options.dragCoefficient || DEFAULTS.dragCoefficient;
-        this.separationDistance = options.separationDistance || this.mass/2 || DEFAULTS.separationDistance;
+        this.separationDistance = options.separationDistance || this.mass / 2 || DEFAULTS.separationDistance;
         this.G = options.G || DEFAULTS.G;
 
         this.debug = options.debug || DEFAULTS.debug;
@@ -168,6 +168,19 @@ class Mover {
         }
     }
 
+    // Implementing Reynolds' flow field following algorithm
+    // http://www.red3d.com/cwr/steer/FlowFollow.html
+    followFlowField(flowField) {
+        // What is the vector at that spot in the flow field?
+        let desired = flowField.lookup(this.location);
+        // Scale it up by maxspeed
+        desired.mult(this.maxSpeed);
+        // Steering is desired minus velocity
+        let steer = p5.Vector.sub(desired, this.velocity);
+        steer.limit(this.maxForce); // Limit to maximum steering force
+        this.applyForce(steer);
+    }
+
     // A function to get the normal point from a point (p) to a line segment (a-b)
     // This function could be optimized to make fewer new Vector objects
     getNormalPoint(p, a, b) {
@@ -259,76 +272,36 @@ class Mover {
     }
 
     // Separation
-  // Method checks for nearby vehicles and steers away
-  separate(vehicles) {
-    let desiredseparation = this.separationDistance;
-    let sum = createVector();
-    let count = 0;
-    // For every boid in the system, check if it's too close
-    for (let i = 0; i < vehicles.length; i++) {
-      let d = p5.Vector.dist(this.location, vehicles[i].location);
-      // If the distance is greater than 0 and less than an arbitrary amount (0 when you are yourself)
-      if ((d > 0) && (d < desiredseparation)) {
-        // Calculate vector pointing away from neighbor
-        let diff = p5.Vector.sub(this.location, vehicles[i].location);
-        diff.normalize();
-        diff.div(d); // Weight by distance
-        sum.add(diff);
-        count++; // Keep track of how many
-      }
+    // Method checks for nearby vehicles and steers away
+    separate(vehicles) {
+        let desiredseparation = this.separationDistance;
+        let sum = createVector();
+        let count = 0;
+        // For every boid in the system, check if it's too close
+        for (let i = 0; i < vehicles.length; i++) {
+            let d = p5.Vector.dist(this.location, vehicles[i].location);
+            // If the distance is greater than 0 and less than an arbitrary amount (0 when you are yourself)
+            if ((d > 0) && (d < desiredseparation)) {
+                // Calculate vector pointing away from neighbor
+                let diff = p5.Vector.sub(this.location, vehicles[i].location);
+                diff.normalize();
+                diff.div(d); // Weight by distance
+                sum.add(diff);
+                count++; // Keep track of how many
+            }
+        }
+        // Average -- divide by how many
+        if (count > 0) {
+            sum.div(count);
+            // Our desired vector is the average scaled to maximum speed
+            sum.normalize();
+            sum.mult(this.maxSpeed);
+            // Implement Reynolds: Steering = Desired - Velocity
+            sum.sub(this.velocity);
+            sum.limit(this.maxForce);
+        }
+        return sum;
     }
-    // Average -- divide by how many
-    if (count > 0) {
-      sum.div(count);
-      // Our desired vector is the average scaled to maximum speed
-      sum.normalize();
-      sum.mult(this.maxSpeed);
-      // Implement Reynolds: Steering = Desired - Velocity
-      sum.sub(this.velocity);
-      sum.limit(this.maxForce);
-    }
-    return sum;
-    }
-
-    // separate(movers){
-    //     const desiredSeparation = this.mass;
-    //     const sum = createVector();
-    //     let steer = createVector();
-    //     let count = 0;
-
-    //     // for every mover in the system check if it is too close
-    //     movers.forEach( (mover, i) => {
-    //         const d = p5.Vector.dist(this.location, mover.location);
-    //         // don't calc if for your yourself.
-    //         if( (d > 0) && ( d < desiredSeparation) ){
-    //             // calculate the vector pointed away from the neighbor
-    //             const diff = p5.Vector.sub(this.location, mover.position);
-    //             diff.normalize();
-    //             diff.div(d); // weight by distance
-
-    //             sum.add(diff);
-    //             count++; // keep track of how many
-    //         }
-    //     });
-
-    //     if (count > 0){
-    //         sum.div(count);
-    //         // our desired vector is the avg scaled to max speed
-    //         sum.normalize();
-    //         sum.mult(this.maxSpeed);
-
-    //         // Implement Reynolds: Steering = Desired - Velocity
-    //         // TODO: could this just be this.seek() or this.arrive()?
-    //         // steer = p5.Vector.sub(sum, this.velocity);
-    //         // steer.limit(this.maxForce);
-    //         // this.applyForce(steer);
-
-    //         sum.sub(this.velocity)
-    //         sum.limit(this.maxForce)
-
-    //     }
-    //     return {separationForce:sum, steeringForce:steer};
-    // }
 
     applyForce(force) {
         // acceleration = force/mass
@@ -362,6 +335,14 @@ class Mover {
             this.location.y = this.mass;
             this.velocity.y *= -1;
         }
+    }
+
+    // Wraparound
+    borders() {
+        if (this.location.x < -this.mass) this.location.x = width + this.mass;
+        if (this.location.y < -this.mass) this.location.y = height + this.mass;
+        if (this.location.x > width + this.mass) this.location.x = -this.mass;
+        if (this.location.y > height + this.mass) this.location.y = -this.mass;
     }
 
 
