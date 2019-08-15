@@ -319,6 +319,31 @@ class Mover {
         this.acceleration.mult(0);
     }
 
+    contain(centerVector, w, h){
+        let desired = null;
+        const rW = w/2;
+        const rH = h/2; 
+        if (this.location.x < (centerVector.x - rW) ) {
+            desired = createVector(this.maxSpeed, this.velocity.y);
+          } else if (this.location.x > (centerVector.x + rW)) {
+            desired = createVector(-this.maxSpeed, this.velocity.y);
+          }
+      
+          if (this.location.y < (centerVector.y - rH)) {
+            desired = createVector(this.velocity.x, this.maxSpeed);
+          } else if (this.location.y > (centerVector.y + rH)) {
+            desired = createVector(this.velocity.x, -this.maxSpeed);
+          }
+      
+          if (desired !== null) {
+            desired.normalize();
+            desired.mult(this.maxSpeed);
+            let steer = p5.Vector.sub(desired, this.velocity);
+            steer.limit(this.maxForce);
+            this.applyForce(steer);
+          }
+    }
+
     checkEdges() {
         if (this.location.x > width - this.mass) {
             this.location.x = width - this.mass;
