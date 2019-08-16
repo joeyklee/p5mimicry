@@ -6,7 +6,9 @@ const DEFAULTS = {
     maxForce: 0.2,
     maxSpeed: 2,
     debug: false,
-    separationDistance: 40
+    separationDistance: 40,
+    alignDistance: 40,
+    cohesionDistance: 40
 }
 
 
@@ -24,6 +26,8 @@ class Mover {
         this.frictionCoefficient = options.frictionCoefficient || DEFAULTS.frictionCoefficient;
         this.dragCoefficient = options.dragCoefficient || DEFAULTS.dragCoefficient;
         this.separationDistance = options.separationDistance || this.mass / 2 || DEFAULTS.separationDistance;
+        this.alignDistance = options.alignDistance || this.mass || DEFAULTS.alignDistance;
+        this.cohesionDistance = options.cohesionDistance || this.mass*2 || DEFAULTS.cohesionDistance;
         this.G = options.G || DEFAULTS.G;
 
         this.debug = options.debug || DEFAULTS.debug;
@@ -37,7 +41,7 @@ class Mover {
         f.mult(-1);
         f.normalize();
         // scale the friction by the friction coefficient
-        f.mult(frictionCoefficient);
+        f.mult(frictionMag);
 
         // here we directly apply friction
         this.applyForce(f);
@@ -275,7 +279,8 @@ class Mover {
     // Method checks for nearby vehicles and steers away
     separate(vehicles) {
         let desiredseparation = this.separationDistance;
-        let sum = createVector();
+        // the steering force is the average of all the force sum/count
+        let steer = createVector(0,0);
         let count = 0;
         // For every boid in the system, check if it's too close
         for (let i = 0; i < vehicles.length; i++) {
@@ -286,22 +291,103 @@ class Mover {
                 let diff = p5.Vector.sub(this.location, vehicles[i].location);
                 diff.normalize();
                 diff.div(d); // Weight by distance
-                sum.add(diff);
+                steer.add(diff);
                 count++; // Keep track of how many
             }
         }
         // Average -- divide by how many
         if (count > 0) {
-            sum.div(count);
+            steer.div(count);
             // Our desired vector is the average scaled to maximum speed
+            steer.normalize();
+            steer.mult(this.maxSpeed);
+            // Implement Reynolds: Steering = Desired - Velocity
+            steer.sub(this.velocity);
+            steer.limit(this.maxForce);
+        }
+        return steer;
+    }
+
+    // align
+    align(vehicles){
+        let alignDistance = this.alignDistance;
+        let sum = createVector(0,0);
+        let count = 0;
+
+        for(let i = 0; i < vehicles.length; i++){
+            let d = p5.Vector.dist(this.location, vehicles[i].location)
+
+            if( (d > 0) && (d < alignDistance)){
+                sum.add(vehicles[i].velocity);
+                count++;
+            }
+        }
+
+        if(count > 0){
+            sum.div(count);
+            sum.normalize();
+            sum.mult(this.maxSpeed);
+            
+            let steer = p5.Vector.sub(sum, this.velocity);
+            steer.limit(this.maxForce);
+            return steer;
+        } else {
+            return createVector(0, 0);
+        }
+
+    }
+
+    // cohesion
+    cohesion(vehicles){
+        let cohesionDistance = this.cohesionDistance;
+        let sum = createVector(0,0);
+        let count = 0;
+
+        for(let i = 0; i < vehicles.length; i++){
+            let d = p5.Vector.dist(this.location, vehicles[i].location);
+
+            if( (d > 0) && (d < cohesionDistance)){
+                sum.add(vehicles[i].location);
+                count++;
+            }
+        }
+        
+        if(count > 0){
+            sum.div(count);
             sum.normalize();
             sum.mult(this.maxSpeed);
             // Implement Reynolds: Steering = Desired - Velocity
             sum.sub(this.velocity);
             sum.limit(this.maxForce);
+            
+            // return this.seek(sum)
+            return sum
+        } else {
+            return createVector(0,0);
         }
-        return sum;
+
     }
+
+    flock(vehicles, flockOptions = {}){
+        flockOptions = (typeof flockOptions !== 'undefined') ? flockOptions : {};
+        let sepMultiplier = flockOptions.sepMultiplier || 1.5;
+        let aliMultiplier = flockOptions.aliMultiplier || 1.0;
+        let cohMultiplier = flockOptions.cohMultiplier || 1.0;
+
+        let sep = this.separate(vehicles);
+        let ali = this.align(vehicles);
+        let coh = this.cohesion(vehicles);
+
+        sep.mult(sepMultiplier);
+        ali.mult(aliMultiplier);
+        coh.mult(cohMultiplier);
+
+        this.applyForce(sep);
+        this.applyForce(ali);
+        this.applyForce(coh);
+
+    }
+
 
     applyForce(force) {
         // acceleration = force/mass

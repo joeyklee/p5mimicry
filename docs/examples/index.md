@@ -16,6 +16,8 @@ The examples below correspond to various functions of each of the nocjs `class`e
 * [mover_containDynamic](https://joeyklee.github.io/nocjs/examples/mover_containDynamic)
 * [mover_flowFieldPerlin](https://joeyklee.github.io/nocjs/examples/mover_flowFieldPerlin)
 * [mover_flowFieldRandomGaussian](https://joeyklee.github.io/nocjs/examples/mover_flowFieldRandomGaussian)
+* [mover_flock](https://joeyklee.github.io/nocjs/examples/mover_flock)
+* [mover_flockAndSeek](https://joeyklee.github.io/nocjs/examples/mover_flockAndSeek)
 
 ## Pendulum
 * [pendulum](https://joeyklee.github.io/nocjs/examples/pendulum)
