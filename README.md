@@ -117,7 +117,7 @@ Working through these: https://github.com/nature-of-code/noc-examples-p5.js
   * path-complex ✅
 * Pendulum ✅
 * Spring ✅
-* Particle systems
+* Particle systems ✅
 * Cellular Automata
   * wolfram
   * gameoflife
