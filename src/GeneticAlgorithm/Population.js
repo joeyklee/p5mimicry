@@ -1,5 +1,6 @@
 const DNA = require('./DNA');
 const Inhabitant = require('./Inhabitant');
+const Obstacle = require('./Obstacle');
 
 class Population {
     constructor(mutationRate, populationSize, inhabitantType, lifetime, target) {
@@ -16,6 +17,8 @@ class Population {
         this.target = target;
 
         this.inhabitantType = inhabitantType;
+
+        this.obstacles = [];
 
         this.init();
     }
@@ -34,9 +37,13 @@ class Population {
         }
     }
 
-    createInhabitant(dna){
+    createObstacle(x, y, w, h){
+        this.obstacles.push( new Obstacle(x, y, w, h))
+    }
+
+    createInhabitant(dna) {
         dna = (typeof dna !== 'undefined') ? dna : new DNA(null, 300, 'vectors');
-        switch(this.inhabitantType){
+        switch (this.inhabitantType) {
             case 'vectors':
                 return this.createVectorInhabitant(dna);
             default:
@@ -45,18 +52,18 @@ class Population {
         }
     }
 
-    createVectorInhabitant(dna){
+    createVectorInhabitant(dna) {
         let position = createVector(width / 2, height + 20);
         return new Inhabitant(position, dna, this.target)
     }
 
 
 
-    run(os) {
+    run() {
         // If the generation hasn't ended yet
         if (this.lifecycle < this.lifetime) {
             // let the population live
-            this.live(os);
+            this.live(this.obstacles);
 
             if ((this.targetReached()) && (this.lifecycle < this.recordtime)) {
                 this.recordtime = this.lifecycle;
@@ -154,12 +161,12 @@ class Population {
         return record;
     }
 
-    live(os) {
+    live() {
         // For every creature
         for (let i = 0; i < this.population.length; i++) {
             // If it finishes, mark it down as done!
             this.population[i].checkTarget();
-            this.population[i].run(os);
+            this.population[i].run(this.obstacles);
         }
     }
 

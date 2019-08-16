@@ -1,30 +1,3 @@
-class Obstacle {
-    constructor(x, y, w, h) {
-        this.position = createVector(x, y);
-        this.w = w;
-        this.h = h;
-    }
-
-    display() {
-        stroke(0);
-        fill(175);
-        strokeWeight(2);
-        rectMode(CORNER);
-        rect(this.position.x, this.position.y, this.w, this.h);
-    }
-
-    contains(spot) {
-        if (spot.x > this.position.x && spot.x < this.position.x + this.w && spot.y > this.position.y && spot.y < this.position.y + this.h) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-}
-
-
-
 // ***************
 
 let ga = nocjs.GeneticAlgorithm;
@@ -33,36 +6,45 @@ let target;
 let population; // Population
 let obstacles;
 
-
+//  creating a different set of vector inhabitants
+class VectorPopulation extends ga.Population {
+    createVectorInhabitant(dna){
+        let position = createVector(0, height/2);
+        return new ga.Inhabitant(position, dna, target)
+    }
+}
 
 function setup() {
     createCanvas(480, 360);
 
-    target = new Obstacle(width / 2 - 12, 24, 24, 24);
+    target = new ga.Obstacle(width / 2 - 12, 24, 24, 24);
     // mutationRate, populationSize, lifetime, target
+    // population = new VectorPopulation(mutationRate, 50, 'vectors', 300, target);
     population = new ga.Population(mutationRate, 50, 'vectors', 300, target);
-    
-    // Create the obstacle course
-    obstacles = [];
-    obstacles.push(new Obstacle(width / 2 - 100, height / 2, 200, 10));
+    // add an obstacle
+    population.createObstacle(width / 2 - 100, height / 2, 200, 10)
     
 }
 
 function draw() {
     background(220);
 
-    population.run(obstacles);
+    population.run();
 
 
     // display stuff
     // Draw the start and target positions
     target.display();
-
+    displayInfo();
     // Draw the obstacles
-    for (let i = 0; i < obstacles.length; i++) {
-        obstacles[i].display();
+    for (let i = 0; i < population.obstacles.length; i++) {
+        population.obstacles[i].display();
     }
 
+    
+}
+
+function displayInfo(){
     // Display some info
     fill(0);
     noStroke();

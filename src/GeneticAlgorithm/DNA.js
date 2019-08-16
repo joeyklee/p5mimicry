@@ -1,26 +1,26 @@
 class DNA {
-    constructor(newGenes, lifetime, geneType){
+    constructor(newGenes, lifetime, geneType) {
         this.lifetime = lifetime || 300;
         this.geneType = geneType || 'vectors';
 
-        if(newGenes){
+        if (newGenes) {
             this.genes = newGenes;
         } else {
             this.genes = [];
-            
+
             // Constructor (makes a DNA of random PVectors)
             for (let i = 0; i < this.lifetime; i++) {
 
                 // createGenes function should return something like a p5.Vector or string or something iterable
                 this.genes[i] = this.createGenes();
 
-              }
+            }
 
         }
     }
 
-    createGenes(){
-        switch(this.geneType){
+    createGenes() {
+        switch (this.geneType) {
             case 'vectors':
                 return this.createVectorGenes();
             case 'text':
@@ -31,7 +31,7 @@ class DNA {
 
     }
 
-    createVectorGenes(maxForce){
+    createVectorGenes(maxForce) {
         let angle = random(TWO_PI);
         let gene = createVector(cos(angle), sin(angle));
         // TODO: add maxForce param here
@@ -39,18 +39,18 @@ class DNA {
         return gene;
     }
 
-    createRandomTextGenes(){
+    createRandomTextGenes() {
         let c = floor(random(63, 122));
         if (c === 63) c = 32;
         if (c === 64) c = 46;
-        
+
         return String.fromCharCode(c);
-    }   
-    
+    }
+
 
     // crossover 
     // creates new DNA sequecne from two (this and a partner)
-    crossover(partner){
+    crossover(partner) {
         let child = [];
 
         // pick a midppoint
@@ -66,18 +66,18 @@ class DNA {
     }
 
     // mutation based on a probability
-    mutate(m){
+    mutate(m) {
         for (let i = 0; i < this.genes.length; i++) {
             if (random(1) < m) {
-            //   let angle = random(TWO_PI);
-            //   this.genes[i] = p5.Vector.fromAngle(angle);
-            //   this.genes[i].mult(random(0, this.maxforce));
+                //   let angle = random(TWO_PI);
+                //   this.genes[i] = p5.Vector.fromAngle(angle);
+                //   this.genes[i].mult(random(0, this.maxforce));
 
-            // ADD RANDOM MUTATION TO AFFECT GENES
-            this.genes[i] = this.createGenes();
+                // ADD RANDOM MUTATION TO AFFECT GENES
+                this.genes[i] = this.createGenes();
 
             }
-          }
+        }
     }
 
 }
