@@ -26,3 +26,8 @@ The examples below correspond to various functions of each of the nocjs `class`e
 ## Spring
 * [spring](https://joeyklee.github.io/nocjs/examples/spring)
 * [spring_interactive](https://joeyklee.github.io/nocjs/examples/spring_interactive)
+
+## ParticleSystem
+* [simple](https://joeyklee.github.io/nocjs/examples/particleSystem_simple)
+* [custom](https://joeyklee.github.io/nocjs/examples/particleSystem_custom)
+* [blending](https://joeyklee.github.io/nocjs/examples/particleSystem_blending)

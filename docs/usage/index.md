@@ -242,3 +242,12 @@ new nocjs.PathComplex()
 ```
 
 docs coming soon
+
+## ParticleSystem
+
+
+```js
+new nocjs.ParticleSystem(vectorLocation?)
+```
+
+docs coming soon
