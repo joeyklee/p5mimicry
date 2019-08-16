@@ -6,6 +6,7 @@ import PathComplex from './PathComplex';
 import FlowField from './FlowField';
 import Wave from './Wave';
 import ParticleSystem from './ParticleSystem';
+import GeneticAlgorithm from './GeneticAlgorithm';
 
 module.exports = {
     Mover,
@@ -15,5 +16,6 @@ module.exports = {
     PathComplex,
     FlowField,
     Wave,
-    ParticleSystem
+    ParticleSystem,
+    GeneticAlgorithm
 }
