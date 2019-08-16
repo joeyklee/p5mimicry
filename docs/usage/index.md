@@ -173,6 +173,42 @@ const DEFAULTS = {
 * containerHeight: the container height from center
 
 
+**.cohesion(movers)**
+> calculates an cohesion force for an array of movers
+```js
+.align(movers)
+```
+**Parameters**:
+* movers: an array of movers
+**returns**:
+* steering force
+
+**.align(movers)**
+> calculates an alignment force for an array of movers
+```js
+.align(movers)
+```
+**Parameters**:
+* movers: an array of movers
+**returns**:
+* steering force
+
+
+**.flock(movers, flockOptions?)**
+> applies a flocking behavior to an array of movers
+> Uses .separate(), .align(), .cohesion() under the hood
+```js
+.flock(movers, flockOptions?)
+```
+**Parameters**:
+* movers: an array of movers
+* flockOptions?: an object containing: 
+* ```{sepMultiplier:1.5, aliMultiplier:1, cohMultiplier:1}```
+
+
+
+
+
 ## Pendulum
 
 ```js
