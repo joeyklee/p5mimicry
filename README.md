@@ -107,10 +107,10 @@ Working through these: https://github.com/nature-of-code/noc-examples-p5.js
   * seek ✅
   * arrive ✅
   * path-following ✅
-  * stay-within-walls ==> "contain" 
+  * stay-within-walls ==> "contain" ✅
   * flow field ✅
   * separation ✅
-  * flocking
+  * flocking ✅
 * Path ✅
   * path-simple ✅
   * path-complex ✅
