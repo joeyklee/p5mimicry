@@ -1,17 +1,21 @@
+const DNA = require('./DNA');
+const Inhabitant = require('./Inhabitant');
+
 class Population {
-    constructor(mutationRate, populationSize, createInhabitant, lifetime) {
+    constructor(mutationRate, populationSize, inhabitantType, lifetime, target) {
 
         this.mutationRate = mutationRate;
         this.populationSize = populationSize;
         this.population = [];
         this.matingPool = [];
         this.generations = 0;
-        this.createInhabitant = createInhabitant.bind(this);
 
         this.lifetime = lifetime || 300;
         this.recordtime = lifetime || 300;
         this.lifecycle = 0;
+        this.target = target;
 
+        this.inhabitantType = inhabitantType;
 
         this.init();
     }
@@ -29,6 +33,24 @@ class Population {
             this.population[i] = this.createInhabitant();
         }
     }
+
+    createInhabitant(dna){
+        dna = (typeof dna !== 'undefined') ? dna : new DNA(null, 300, 'vectors');
+        switch(this.inhabitantType){
+            case 'vectors':
+                return this.createVectorInhabitant(dna);
+            default:
+                return this.createVectorInhabitant(dna);
+
+        }
+    }
+
+    createVectorInhabitant(dna){
+        let position = createVector(width / 2, height + 20);
+        return new Inhabitant(position, dna, this.target)
+    }
+
+
 
     run(os) {
         // If the generation hasn't ended yet

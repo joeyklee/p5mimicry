@@ -1,7 +1,7 @@
 class DNA {
-    constructor(newGenes, lifetime, createGenes){
+    constructor(newGenes, lifetime, geneType){
         this.lifetime = lifetime || 300;
-        this.createGenes = createGenes;
+        this.geneType = geneType || 'vectors';
 
         if(newGenes){
             this.genes = newGenes;
@@ -11,10 +11,6 @@ class DNA {
             // Constructor (makes a DNA of random PVectors)
             for (let i = 0; i < this.lifetime; i++) {
 
-                // let angle = random(TWO_PI);
-                // this.genes[i] = createVector(cos(angle), sin(angle));
-                // this.genes[i].mult(random(0, this.maxforce));
-
                 // createGenes function should return something like a p5.Vector or string or something iterable
                 this.genes[i] = this.createGenes();
 
@@ -22,6 +18,35 @@ class DNA {
 
         }
     }
+
+    createGenes(){
+        switch(this.geneType){
+            case 'vectors':
+                return this.createVectorGenes();
+            case 'text':
+                return this.createRandomTextGenes();
+            default:
+                return this.createVectorGenes();
+        }
+
+    }
+
+    createVectorGenes(maxForce){
+        let angle = random(TWO_PI);
+        let gene = createVector(cos(angle), sin(angle));
+        // TODO: add maxForce param here
+        gene.mult(random(0, 0.2));
+        return gene;
+    }
+
+    createRandomTextGenes(){
+        let c = floor(random(63, 122));
+        if (c === 63) c = 32;
+        if (c === 64) c = 46;
+        
+        return String.fromCharCode(c);
+    }   
+    
 
     // crossover 
     // creates new DNA sequecne from two (this and a partner)
