@@ -4,6 +4,7 @@ import Spring from './Spring';
 import Path from './Path';
 import PathComplex from './PathComplex';
 import FlowField from './FlowField';
+import Wave from './Wave';
 
 module.exports = {
     Mover,
@@ -11,5 +12,6 @@ module.exports = {
     Spring,
     Path,
     PathComplex,
-    FlowField
+    FlowField,
+    Wave
 }
