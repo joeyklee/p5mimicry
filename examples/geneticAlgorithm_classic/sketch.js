@@ -7,12 +7,12 @@ let population; // Population
 let obstacles;
 
 //  creating a different set of vector inhabitants
-class VectorPopulation extends ga.Population {
-    createVectorInhabitant(dna){
-        let position = createVector(0, height/2);
-        return new ga.Inhabitant(position, dna, target)
-    }
-}
+// class VectorPopulation extends ga.Population {
+//     createVectorInhabitant(dna){
+//         let position = createVector(0, height/2);
+//         return new ga.Inhabitant(position, dna, target)
+//     }
+// }
 
 function setup() {
     createCanvas(480, 360);
@@ -20,7 +20,7 @@ function setup() {
     target = new ga.Obstacle(width / 2 - 12, 24, 24, 24);
     // mutationRate, populationSize, lifetime, target
     // population = new VectorPopulation(mutationRate, 50, 'vectors', 300, target);
-    population = new ga.Population(mutationRate, 50, 'vectors', 300, target);
+    population = new ga.VectorPopulation(mutationRate, 50, target, 300);
     // add an obstacle
     population.createObstacle(width / 2 - 100, height / 2, 200, 10)
     

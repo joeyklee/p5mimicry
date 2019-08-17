@@ -3,22 +3,17 @@ const Inhabitant = require('./Inhabitant');
 const Obstacle = require('./Obstacle');
 
 class Population {
-    constructor(mutationRate, populationSize, inhabitantType, lifetime, target) {
+    constructor(mutationRate, populationSize, target) {
 
         this.mutationRate = mutationRate;
         this.populationSize = populationSize;
         this.population = [];
         this.matingPool = [];
         this.generations = 0;
-
-        this.lifetime = lifetime || 300;
-        this.recordtime = lifetime || 300;
-        this.lifecycle = 0;
+        this.finished = false;
+        this.best = null;
+        this.perfectScore = 1;
         this.target = target;
-
-        this.inhabitantType = inhabitantType;
-
-        this.obstacles = [];
 
         this.init();
     }
@@ -37,78 +32,14 @@ class Population {
         }
     }
 
-    createObstacle(x, y, w, h){
-        this.obstacles.push( new Obstacle(x, y, w, h))
-    }
-
-    createInhabitant(dna) {
-        dna = (typeof dna !== 'undefined') ? dna : new DNA(null, 300, 'vectors');
-        switch (this.inhabitantType) {
-            case 'vectors':
-                return this.createVectorInhabitant(dna);
-            default:
-                return this.createVectorInhabitant(dna);
-
-        }
-    }
-
-    createVectorInhabitant(dna) {
-        let position = createVector(width / 2, height + 20);
-        return new Inhabitant(position, dna, this.target)
-    }
-
-
-
-    run() {
-        // If the generation hasn't ended yet
-        if (this.lifecycle < this.lifetime) {
-            // let the population live
-            this.live(this.obstacles);
-
-            if ((this.targetReached()) && (this.lifecycle < this.recordtime)) {
-                this.recordtime = this.lifecycle;
-            }
-            this.incrementLifecycle();
-
-        } else {
-            // Otherwise a new generation
-            this.resetLifecycle();
-            this.calcFitness();
-            this.selection();
-            this.reproduction();
-        }
-    }
-
-
     /**
-     * reset this.lifecycle to 0
-     */
-    resetLifecycle() {
-        this.lifecycle = 0;
-    }
-
-    /**
-     * increment this.lifecycle by 1
-     */
-    incrementLifecycle() {
-        this.lifecycle += 1;
-    }
-
-    calcFitness() {
-        for (let i = 0; i < this.population.length; i++) {
-            this.population[i].calcFitness();
-        }
-    }
-
-    /**
-     * // Generate a mating pool
+     * SELECTION
      */
     selection() {
         // Clear the ArrayList
         this.matingPool = [];
         // Calculate total fitness of whole population
         let maxFitness = this.getMaxFitness();
-        console.log(maxFitness)
         // Calculate fitness for each member of the population (scaled to value between 0 and 1)
         // Based on fitness, each member will get added to the mating pool a certain number of times
         // A higher fitness = more entries to mating pool = more likely to be picked as a parent
@@ -122,6 +53,9 @@ class Population {
         }
     }
 
+    /**
+     * REPRODUCTION
+     */
     reproduction() {
         // Refill the population with children from the mating pool
         for (let i = 0; i < this.population.length; i++) {
@@ -146,19 +80,164 @@ class Population {
         this.generations++;
     }
 
-    getGenerations() {
-        return this.generations;
+    /**
+     * Get the this.best
+     */
+    evaluate(){
+        let record = 0;
+        let index = 0;
+        for (let i = 0; i < this.population.length; i++) {
+            if (this.population[i].getFitness() > record) {
+                index = i;
+                record = this.population[i].getFitness();
+            }
+        }
+        this.best = this.population[index]
+        
+        // if we achieve the goal, then change this.finished to TRUE
+        if (record === this.perfectScore) {
+            this.finished = true;
+        }
+        
     }
 
+    /**
+     * check if this is finished
+     */
+    isFinished() {
+        return this.finished;
+      }
+
+    /**
+     * get the max fitness - same as evaluate() except returns the record
+     */
     getMaxFitness() {
         let record = 0;
+        let index = 0;
         for (let i = 0; i < this.population.length; i++) {
             if (this.population[i].getFitness() > record) {
                 record = this.population[i].getFitness();
             }
         }
+        this.best = this.population[index]
 
         return record;
+    }
+
+    /**
+     * Get the fitness for each Inhabitant
+     */
+    calcFitness() {
+        for (let i = 0; i < this.population.length; i++) {
+            this.population[i].calcFitness();
+        }
+    }
+
+    /**
+     * Get the number of generations
+     */
+    getGenerations() {
+        return this.generations;
+    }
+
+    /* ------ the below functions will change depending on the use case ------- */
+    /**
+     * VARIES BASED ON THE PROBLEM BEING SOLVED
+     * SEE: VectorPopulation, TextPopulation, etc
+     * @param {*} dna 
+     */
+    // add a new inhabitant to the population
+    createInhabitant(dna) {
+        // dna = (typeof dna !== 'undefined') ? dna : new DNA(null, 300, 'vectors');
+        // let position = createVector(width / 2, height + 20);
+        // return new Inhabitant(position, dna, this.target)
+    }
+
+    run() {
+        // If the generation hasn't ended yet
+        // if (this.lifecycle < this.lifetime) {
+        //     // let the population live
+        //     this.live(this.obstacles);
+
+        //     if ((this.targetReached()) && (this.lifecycle < this.recordtime)) {
+        //         this.recordtime = this.lifecycle;
+        //     }
+        //     this.incrementLifecycle();
+
+        // } else {
+        //     // Otherwise a new generation
+        //     this.resetLifecycle();
+        //     this.calcFitness();
+        //     this.selection();
+        //     this.reproduction();
+        //     this.evaluate();
+        // }
+    }
+    
+    live() {
+        // For every creature
+        // for (let i = 0; i < this.population.length; i++) {
+        //     // If it finishes, mark it down as done!
+        //     this.population[i].checkTarget();
+        //     this.population[i].run(this.obstacles);
+        // }
+    }
+
+}
+
+
+class TextPopulation extends Population {
+    constructor(){
+        super();
+
+    }
+
+}
+
+class VectorPopulation extends Population {
+    constructor(mutationRate, populationSize, target, lifetime){
+        super(mutationRate, populationSize, target);
+
+        this.lifetime = lifetime || 300;
+        this.recordtime = lifetime || 300;
+        this.lifecycle = 0;
+        this.obstacles = [];
+
+    }
+    
+    createInhabitant(dna){
+        dna = (typeof dna !== 'undefined') ? dna : new DNA(null, 300, 'vectors');
+        let position = createVector(width / 2, height + 20);
+        return new Inhabitant(position, dna, this.target)
+    }
+
+    createObstacle(x, y, w, h){
+        this.obstacles.push( new Obstacle(x, y, w, h))
+    }
+
+    /**
+     * reset this.lifecycle to 0
+     */
+    resetLifecycle() {
+        this.lifecycle = 0;
+    }
+
+    /**
+     * increment this.lifecycle by 1
+     */
+    incrementLifecycle() {
+        this.lifecycle += 1;
+    }
+
+    // Did anything finish?
+    targetReached() {
+        for (let i = 0; i < this.population.length; i++) {
+            if (this.population[i].hitTarget){
+                this.finished = true;
+                return true;
+            }
+        }
+        return false;
     }
 
     live() {
@@ -170,13 +249,28 @@ class Population {
         }
     }
 
-    // Did anything finish?
-    targetReached() {
-        for (let i = 0; i < this.population.length; i++) {
-            if (this.population[i].hitTarget) return true;
+    run() {
+        // If the generation hasn't ended yet
+        if (this.lifecycle < this.lifetime) {
+            // let the population live
+            this.live(this.obstacles);
+
+            if ((this.targetReached()) && (this.lifecycle < this.recordtime)) {
+                this.recordtime = this.lifecycle;
+            }
+            this.incrementLifecycle();
+
+        } else {
+            // Otherwise a new generation
+            this.resetLifecycle();
+            this.calcFitness();
+            this.selection();
+            this.reproduction();
+            this.evaluate();
         }
-        return false;
     }
+
 }
 
-module.exports = Population;
+
+module.exports = {Population, VectorPopulation, TextPopulation};
