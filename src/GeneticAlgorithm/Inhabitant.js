@@ -1,20 +1,58 @@
 class Inhabitant {
-    constructor(pos, dna, target) {
+    constructor(dna, target) {
+        
+        this.dna = dna;
+        this.target = target;
+        this.fitness = 0;
+
+    }
+
+    calcFitness(){}
+
+    run(){}
+
+    checkTarget(){}
+
+
+    getFitness() {
+        return this.fitness;
+    }
+
+    getDNA() {
+        return this.dna;
+    }
+
+   
+}
+
+class TextInhabitant extends Inhabitant {
+    constructor(dna, target){
+        super(dna, target);
+    }
+    
+    calcFitness(){}
+
+    run(){}
+
+    checkTarget(){}
+}
+
+class VectorInhabitant extends Inhabitant {
+    constructor(dna, target, pos){
+        super(dna, target);
+
         // All of our physics stuff
         this.acceleration = createVector();
         this.velocity = createVector();
         this.position = pos.copy();
         this.r = 4;
-        this.dna = dna;
-        this.finishTime = 0; // We're going to count how long it takes to reach target
-        this.recordDist = 10000; // Some high number that will be beat instantly
-        this.target = target;
 
-        this.fitness = 0;
         this.geneCounter = 0;
         this.hitObstacle = false; // Am I stuck on an obstacle?
         this.hitTarget = false; // Did I reach the target
-
+        this.finishTime = 0; // We're going to count how long it takes to reach target
+        this.recordDist = 10000; // Some high number that will be beat instantly
+        
     }
 
     // FITNESS FUNCTION
@@ -73,14 +111,6 @@ class Inhabitant {
         }
     }
 
-    getFitness() {
-        return this.fitness;
-    }
-
-    getDNA() {
-        return this.dna;
-    }
-
     stopped() {
         return this.hitObstacle;
     }
@@ -122,7 +152,9 @@ class Inhabitant {
 
         pop();
     }
+
+
 }
 
 
-module.exports = Inhabitant;
+module.exports = {Inhabitant, VectorInhabitant, TextInhabitant};

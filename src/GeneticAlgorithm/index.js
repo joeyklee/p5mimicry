@@ -1,13 +1,16 @@
-const DNA = require('./DNA');
+const {DNA, VectorDNA, TextDNA} = require('./DNA');
 const {Population, VectorPopulation, TextPopulation} = require('./Population');
-const Inhabitant = require('./Inhabitant');
+const {Inhabitant, VectorInhabitant} = require('./Inhabitant');
 const Obstacle = require('./Obstacle');
 
 module.exports = {
     DNA,
+    VectorDNA,
+    TextDNA,
     Population,
     VectorPopulation, 
     TextPopulation,
     Inhabitant,
+    VectorInhabitant,
     Obstacle
 }

@@ -1,5 +1,5 @@
-const DNA = require('./DNA');
-const Inhabitant = require('./Inhabitant');
+const {DNA, VectorDNA, TextDNA} = require('./DNA');
+const {Inhabitant, VectorInhabitant, TextInhabitant} = require('./Inhabitant');
 const Obstacle = require('./Obstacle');
 
 class Population {
@@ -187,9 +187,15 @@ class Population {
 
 
 class TextPopulation extends Population {
-    constructor(){
-        super();
+    constructor(mutationRate, populationSize, target){
+        super(mutationRate, populationSize, target);
 
+        this.init();
+    }
+
+    createInhabitant(dna){
+        dna = (typeof dna !== 'undefined') ? dna : new TextDNA(null, this.target.length);
+        return new TextInhabitant(dna, this.target)
     }
 
 }
@@ -203,12 +209,14 @@ class VectorPopulation extends Population {
         this.lifecycle = 0;
         this.obstacles = [];
 
+        this.init();
+
     }
     
     createInhabitant(dna){
-        dna = (typeof dna !== 'undefined') ? dna : new DNA(null, 300, 'vectors');
+        dna = (typeof dna !== 'undefined') ? dna : new VectorDNA(null, this.lifetime);
         let position = createVector(width / 2, height + 20);
-        return new Inhabitant(position, dna, this.target)
+        return new VectorInhabitant(dna, this.target, position)
     }
 
     createObstacle(x, y, w, h){

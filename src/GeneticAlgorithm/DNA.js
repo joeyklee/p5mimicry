@@ -1,52 +1,35 @@
 class DNA {
-    constructor(newGenes, lifetime, geneType) {
-        this.lifetime = lifetime || 300;
-        this.geneType = geneType || 'vectors';
+    constructor(newGenes, lifetime) {
+        this.fitness = 0;
+
+        // the lifetime is the length of thing you're trying to solve
+        this.lifetime = lifetime;
 
         if (newGenes) {
             this.genes = newGenes;
         } else {
             this.genes = [];
 
-            // Constructor (makes a DNA of random PVectors)
+            // create an array of genes
+            // their length should be the approx. or exact 
+            // length of the thing you are trying to solve for
+            // for example: an array of vectors telling a rocket how to travel
+            // for example: the length of a sentence you're trying to solve
             for (let i = 0; i < this.lifetime; i++) {
-
                 // createGenes function should return something like a p5.Vector or string or something iterable
                 this.genes[i] = this.createGenes();
-
             }
 
         }
     }
 
     createGenes() {
-        switch (this.geneType) {
-            case 'vectors':
-                return this.createVectorGenes();
-            case 'text':
-                return this.createRandomTextGenes();
-            default:
-                return this.createVectorGenes();
-        }
+        // let c = floor(random(63, 122));
+        // if (c === 63) c = 32;
+        // if (c === 64) c = 46;
 
+        // return String.fromCharCode(c);
     }
-
-    createVectorGenes(maxForce) {
-        let angle = random(TWO_PI);
-        let gene = createVector(cos(angle), sin(angle));
-        // TODO: add maxForce param here
-        gene.mult(random(0, 0.2));
-        return gene;
-    }
-
-    createRandomTextGenes() {
-        let c = floor(random(63, 122));
-        if (c === 63) c = 32;
-        if (c === 64) c = 46;
-
-        return String.fromCharCode(c);
-    }
-
 
     // crossover 
     // creates new DNA sequecne from two (this and a partner)
@@ -60,7 +43,7 @@ class DNA {
             if (i > crossover) child[i] = this.genes[i];
             else child[i] = partner.genes[i];
         }
-        let newGenes = new DNA(child, this.lifetime, this.createGenes);
+        let newGenes = new DNA(child, this.lifetime);
         return newGenes;
 
     }
@@ -82,4 +65,35 @@ class DNA {
 
 }
 
-module.exports = DNA;
+class TextDNA extends DNA {
+    constructor(newGenes, lifetime){
+        super(newGenes, lifetime);
+    }
+    
+    createGenes() {
+        let c = floor(random(63, 122));
+        if (c === 63) c = 32;
+        if (c === 64) c = 46;
+
+        return String.fromCharCode(c);
+    }
+
+}
+
+class VectorDNA extends DNA {
+    constructor(newGenes, lifetime){
+        super(newGenes, lifetime);
+        console.log(lifetime)
+        this.lifetime = lifetime;
+    }
+
+    createGenes(){
+        let angle = random(TWO_PI);
+        let gene = createVector(cos(angle), sin(angle));
+        // TODO: add maxForce param here
+        gene.mult(random(0, 0.2));
+        return gene;
+    }
+}
+
+module.exports = {DNA, VectorDNA, TextDNA};
