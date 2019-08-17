@@ -15,11 +15,11 @@ function setup() {
 function draw() {
     background(220);
 
-    for(let i = 0; i < 100; i++){
+    // for(let i = 0; i < 100; i++){
         population.run();
-    }
+    // }
     
-    if(population.isFinished()){
+    if(population.best.fitness === 1){
         console.log("done!", population.best.dna.genes)
         noLoop();
     }
@@ -38,6 +38,7 @@ function displayInfo(){
     fill(0);
     noStroke();
     text("Generation #: " + population.getGenerations(), 10, 18);
+    text("Best Fitness #: " + population.best.fitness, 10, 32);
     // text("Cycles left: " + (population.lifetime - population.lifecycle), 10, 36);
     // text("Record cycles: " + population.recordtime, 10, 54);
 }
