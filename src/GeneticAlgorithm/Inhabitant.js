@@ -1,17 +1,17 @@
 class Inhabitant {
     constructor(dna, target) {
-        
+
         this.dna = dna;
         this.target = target;
         this.fitness = 0;
 
     }
 
-    calcFitness(){}
+    calcFitness() {}
 
-    run(){}
+    run() {}
 
-    checkTarget(){}
+    checkTarget() {}
 
 
     getFitness() {
@@ -22,23 +22,45 @@ class Inhabitant {
         return this.dna;
     }
 
-   
+
 }
 
 class TextInhabitant extends Inhabitant {
-    constructor(dna, target){
+    constructor(dna, target) {
         super(dna, target);
+
     }
-    
-    calcFitness(){}
 
-    run(){}
+    calcFitness() {
+        let score = 0;
+        for (let i = 0; i < this.dna.genes.length; i++) {
+            if (this.dna.genes[i] == this.target.charAt(i)) {
+                score++;
+            }
+        }
+        this.fitness = score / this.target.length;
+    }
 
-    checkTarget(){}
+    run() {
+        this.display();
+    }
+
+    display(){
+        text( this.getPhrase(), width/2, height/2 );
+    }
+
+
+    checkTarget() {}
+
+    // Converts character array to a String
+    getPhrase() {
+        return this.dna.genes.join("");
+    }
+
 }
 
 class VectorInhabitant extends Inhabitant {
-    constructor(dna, target, pos){
+    constructor(dna, target, pos) {
         super(dna, target);
 
         // All of our physics stuff
@@ -52,7 +74,7 @@ class VectorInhabitant extends Inhabitant {
         this.hitTarget = false; // Did I reach the target
         this.finishTime = 0; // We're going to count how long it takes to reach target
         this.recordDist = 10000; // Some high number that will be beat instantly
-        
+
     }
 
     // FITNESS FUNCTION
@@ -157,4 +179,8 @@ class VectorInhabitant extends Inhabitant {
 }
 
 
-module.exports = {Inhabitant, VectorInhabitant, TextInhabitant};
+module.exports = {
+    Inhabitant,
+    VectorInhabitant,
+    TextInhabitant
+};

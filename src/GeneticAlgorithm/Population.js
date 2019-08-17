@@ -191,11 +191,20 @@ class TextPopulation extends Population {
         super(mutationRate, populationSize, target);
 
         this.init();
+        this.calcFitness();
+        // this.selection();
     }
 
     createInhabitant(dna){
         dna = (typeof dna !== 'undefined') ? dna : new TextDNA(null, this.target.length);
         return new TextInhabitant(dna, this.target)
+    }
+
+    run(){
+        this.calcFitness();
+        this.selection();
+        this.reproduction();
+        this.evaluate();
     }
 
 }

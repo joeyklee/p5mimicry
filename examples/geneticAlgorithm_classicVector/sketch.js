@@ -4,7 +4,6 @@ let ga = nocjs.GeneticAlgorithm;
 let mutationRate = 0.01;
 let target;
 let population; // Population
-let obstacles;
 
 //  creating a different set of vector inhabitants
 // class VectorPopulation extends ga.Population {

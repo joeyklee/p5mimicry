@@ -23,12 +23,13 @@ class DNA {
         }
     }
 
+    // DEPENDS ON THE USE CASE, DEFAULTS TO TEXT
     createGenes() {
-        // let c = floor(random(63, 122));
-        // if (c === 63) c = 32;
-        // if (c === 64) c = 46;
+        let c = floor(random(63, 122));
+        if (c === 63) c = 32;
+        if (c === 64) c = 46;
 
-        // return String.fromCharCode(c);
+        return String.fromCharCode(c);
     }
 
     // crossover 
@@ -80,11 +81,10 @@ class TextDNA extends DNA {
 
 }
 
+
 class VectorDNA extends DNA {
     constructor(newGenes, lifetime){
         super(newGenes, lifetime);
-        console.log(lifetime)
-        this.lifetime = lifetime;
     }
 
     createGenes(){
