@@ -5,6 +5,8 @@ class DNA {
         this.lifetime = lifetime;
         this.genes = null;
         this.name = this.constructor.name;
+        // create a proxy for each type of unique DNA passed in
+        this.DNAProxy = this.constructor
         this.init(newGenes);
     }
 
@@ -30,12 +32,9 @@ class DNA {
     }
 
 
-    // DEPENDS ON THE USE CASE, DEFAULTS TO TEXT
+    // DEPENDS ON THE USE CASE, DEFAULTS TO Random Number between 0 and 1;
     createGenes() {
-        let c = floor(random(63, 122));
-        if (c === 63) c = 32;
-        if (c === 64) c = 46;
-        return String.fromCharCode(c);
+        return random(0, 1)
     }
 
     // crossover 
@@ -50,7 +49,7 @@ class DNA {
             if (i > crossover) child[i] = this.genes[i];
             else child[i] = partner.genes[i];
         }
-        let newGenes = new DNAProxy(this.name, child, this.lifetime);
+        let newGenes = new this.DNAProxy( child, this.lifetime);
         return newGenes;
 
     }
@@ -99,17 +98,17 @@ class VectorDNA extends DNA {
 
 }
 
-const classes = {
-    DNA,
-    TextDNA,
-    VectorDNA
-}
+// const classes = {
+//     DNA,
+//     TextDNA,
+//     VectorDNA
+// }
 
-class DNAProxy {
-    constructor(className, newGenes, lifetime) {
-        return new classes[className](newGenes, lifetime)
-    }
-}
+// class DNAProxy {
+//     constructor(className, newGenes, lifetime) {
+//         return new classes[className](newGenes, lifetime)
+//     }
+// }
 
 module.exports = {
     DNA,
