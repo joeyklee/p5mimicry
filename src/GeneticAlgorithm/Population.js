@@ -13,9 +13,12 @@ class Population {
         this.finished = false;
         this.best = null;
         this.perfectScore = 1;
-        this.target = target;
+
+        // default target is an array of numbers from 0 to 1
+        this.target = target ? target : [0, 0.25, 0.5, 0.75, 1];
 
         this.init();
+        this.calcFitness();
     }
 
     /**
@@ -148,12 +151,15 @@ class Population {
      */
     // add a new inhabitant to the population
     createInhabitant(dna) {
-        // dna = (typeof dna !== 'undefined') ? dna : new DNA(null, 300, 'vectors');
-        // let position = createVector(width / 2, height + 20);
-        // return new Inhabitant(position, dna, this.target)
+        dna = (typeof dna !== 'undefined') ? dna : new DNA(null, this.target.length);
+        return new Inhabitant(dna, this.target)
     }
 
-    run() {}
+    run(){
+        this.calcFitness();
+        this.selection();
+        this.reproduction();
+    }
     
     live() {}
 
@@ -191,6 +197,7 @@ class VectorPopulation extends Population {
         this.obstacles = [];
 
         this.init();
+        // this.calcFitness();
 
     }
     

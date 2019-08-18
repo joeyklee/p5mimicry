@@ -5,9 +5,27 @@ class Inhabitant {
         this.fitness = 0;
     }
 
-    calcFitness() {}
+    calcFitness() {
+        let score = 0;
+        for (let i = 0; i < this.dna.genes.length; i++) {
+            if ( Number(this.dna.genes[i].toFixed(2)) == Number(this.target[i].toFixed(2))) {
+                score++;
+            }
+        }
+        this.fitness = score / this.target.length;
+    }
 
-    run() {}
+    run() {
+        this.display();
+    }
+
+    display() {
+        text(this.getPhrase(), width / 2, height / 2);
+    }
+
+    getPhrase() {
+        return this.dna.genes.join(",");
+    }
 
     checkTarget() {}
 
