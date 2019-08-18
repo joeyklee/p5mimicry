@@ -5,13 +5,6 @@ let mutationRate = 0.01;
 let target;
 let population; // Population
 
-//  creating a different set of vector inhabitants
-// class VectorPopulation extends ga.Population {
-//     createVectorInhabitant(dna){
-//         let position = createVector(0, height/2);
-//         return new ga.Inhabitant(position, dna, target)
-//     }
-// }
 
 function setup() {
     createCanvas(480, 360);

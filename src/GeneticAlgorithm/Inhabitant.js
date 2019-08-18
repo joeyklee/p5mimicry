@@ -1,10 +1,8 @@
 class Inhabitant {
     constructor(dna, target) {
-
         this.dna = dna;
         this.target = target;
         this.fitness = 0;
-
     }
 
     calcFitness() {}
@@ -45,8 +43,8 @@ class TextInhabitant extends Inhabitant {
         this.display();
     }
 
-    display(){
-        text( this.getPhrase(), width/2, height/2 );
+    display() {
+        text(this.getPhrase(), width / 2, height / 2);
     }
 
 
