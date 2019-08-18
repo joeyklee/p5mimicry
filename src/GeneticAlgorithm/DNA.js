@@ -70,8 +70,6 @@ class DNA {
 class TextDNA extends DNA {
     constructor(newGenes, lifetime){
         super(newGenes, lifetime);
-        
-        this.init(newGenes);
 
     }
  
@@ -93,6 +91,7 @@ class TextDNA extends DNA {
             if (i > crossover) child[i] = this.genes[i];
             else child[i] = partner.genes[i];
         }
+        // TODO: pass classname ref to crossover!!!
         let newGenes = new TextDNA(child, this.lifetime);
         return newGenes;
 
@@ -104,8 +103,7 @@ class TextDNA extends DNA {
 class VectorDNA extends DNA {
     constructor(newGenes, lifetime){
         super(newGenes, lifetime);
-        
-        // this.init(newGenes);
+
     }
 
     createGenes(){
@@ -126,6 +124,7 @@ class VectorDNA extends DNA {
             if (i > crossover) child[i] = this.genes[i];
             else child[i] = partner.genes[i];
         }
+        // TODO: pass classname ref to crossover!!!
         let newGenes = new VectorDNA(child, this.lifetime);
         return newGenes;
 
