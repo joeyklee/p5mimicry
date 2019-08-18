@@ -9,7 +9,7 @@ let population; // Population
 function setup() {
     createCanvas(480, 360);
     // mutationRate, populationSize, target, lifetime
-    population = new ga.TextPopulation(mutationRate, 100, target);
+    population = new ga.TextPopulation(mutationRate, 100, target, target.length);
 }
 
 function draw() {

@@ -2,14 +2,14 @@
 
 let ga = nocjs.GeneticAlgorithm;
 let mutationRate = 0.012;
-let target = [0, 0.25, 0.5, 0.75, 1];
+let target = [0, 0.25, 0.5, 0.75, 1.0];
 let population; // Population
 
 
 function setup() {
     createCanvas(480, 360);
     // mutationRate, populationSize, target
-    population = new ga.Population(mutationRate, 100, target);
+    population = new ga.Population(mutationRate, 100, target, target.length);
 }
 
 function draw() {

@@ -3,7 +3,7 @@ const {Inhabitant, VectorInhabitant, TextInhabitant} = require('./Inhabitant');
 const Obstacle = require('./Obstacle');
 
 class Population {
-    constructor(mutationRate, populationSize, target) {
+    constructor(mutationRate, populationSize, target, lifetime) {
 
         this.mutationRate = mutationRate;
         this.populationSize = populationSize;
@@ -13,9 +13,10 @@ class Population {
         this.finished = false;
         this.best = null;
         this.perfectScore = 1;
+        this.lifetime = lifetime;
 
         // default target is an array of numbers from 0 to 1
-        this.target = target ? target : [0, 0.25, 0.5, 0.75, 1];
+        this.target = target;
 
         this.init();
         this.calcFitness();
@@ -151,7 +152,7 @@ class Population {
      */
     // add a new inhabitant to the population
     createInhabitant(dna) {
-        dna = (typeof dna !== 'undefined') ? dna : new DNA(null, this.target.length);
+        dna = (typeof dna !== 'undefined') ? dna : new DNA(null, this.lifetime);
         return new Inhabitant(dna, this.target)
     }
 
@@ -167,8 +168,8 @@ class Population {
 
 
 class TextPopulation extends Population {
-    constructor(mutationRate, populationSize, target){
-        super(mutationRate, populationSize, target);
+    constructor(mutationRate, populationSize, target, lifetime){
+        super(mutationRate, populationSize, target, lifetime);
 
         this.init();
         this.calcFitness();

@@ -13,6 +13,7 @@ class Inhabitant {
             }
         }
         this.fitness = score / this.target.length;
+
     }
 
     run() {
