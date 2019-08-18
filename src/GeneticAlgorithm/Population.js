@@ -166,7 +166,6 @@ class TextPopulation extends Population {
 
         this.init();
         this.calcFitness();
-        // this.selection();
     }
 
     createInhabitant(dna){
