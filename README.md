@@ -128,6 +128,6 @@ Working through these: https://github.com/nature-of-code/noc-examples-p5.js
   * tree
   * lsystem
 * Genetic Algorithms
-  * traditional
+  * traditional ✅
   * interactive selection
 
