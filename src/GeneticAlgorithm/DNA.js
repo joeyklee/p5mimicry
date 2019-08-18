@@ -4,8 +4,14 @@ class DNA {
 
         // the lifetime is the length of thing you're trying to solve
         this.lifetime = lifetime;
+        this.genes = null;
 
-        if (newGenes) {
+        this.init(newGenes);
+    }
+
+    init(newGenes){
+        
+        if (newGenes !== null) {
             this.genes = newGenes;
         } else {
             this.genes = [];
@@ -23,14 +29,9 @@ class DNA {
         }
     }
 
-    // DEPENDS ON THE USE CASE, DEFAULTS TO TEXT
-    createGenes() {
-        let c = floor(random(63, 122));
-        if (c === 63) c = 32;
-        if (c === 64) c = 46;
 
-        return String.fromCharCode(c);
-    }
+    // DEPENDS ON THE USE CASE, DEFAULTS TO TEXT
+    createGenes() { }
 
     // crossover 
     // creates new DNA sequecne from two (this and a partner)
@@ -69,14 +70,32 @@ class DNA {
 class TextDNA extends DNA {
     constructor(newGenes, lifetime){
         super(newGenes, lifetime);
+        
+        this.init(newGenes);
+
     }
-    
+ 
     createGenes() {
         let c = floor(random(63, 122));
         if (c === 63) c = 32;
         if (c === 64) c = 46;
-
+        // console.log(c);
         return String.fromCharCode(c);
+    }
+
+    crossover(partner) {
+        let child = [];
+
+        // pick a midppoint
+        let crossover = floor(random(this.genes.length));
+        // Take "half" from one and "half" from the other
+        for (let i = 0; i < this.genes.length; i++) {
+            if (i > crossover) child[i] = this.genes[i];
+            else child[i] = partner.genes[i];
+        }
+        let newGenes = new TextDNA(child, this.lifetime);
+        return newGenes;
+
     }
 
 }
@@ -85,6 +104,8 @@ class TextDNA extends DNA {
 class VectorDNA extends DNA {
     constructor(newGenes, lifetime){
         super(newGenes, lifetime);
+        
+        // this.init(newGenes);
     }
 
     createGenes(){
@@ -93,6 +114,21 @@ class VectorDNA extends DNA {
         // TODO: add maxForce param here
         gene.mult(random(0, 0.2));
         return gene;
+    }
+
+    crossover(partner) {
+        let child = [];
+
+        // pick a midppoint
+        let crossover = floor(random(this.genes.length));
+        // Take "half" from one and "half" from the other
+        for (let i = 0; i < this.genes.length; i++) {
+            if (i > crossover) child[i] = this.genes[i];
+            else child[i] = partner.genes[i];
+        }
+        let newGenes = new VectorDNA(child, this.lifetime);
+        return newGenes;
+
     }
 }
 

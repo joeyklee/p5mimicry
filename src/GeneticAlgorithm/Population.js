@@ -153,35 +153,9 @@ class Population {
         // return new Inhabitant(position, dna, this.target)
     }
 
-    run() {
-        // If the generation hasn't ended yet
-        // if (this.lifecycle < this.lifetime) {
-        //     // let the population live
-        //     this.live(this.obstacles);
-
-        //     if ((this.targetReached()) && (this.lifecycle < this.recordtime)) {
-        //         this.recordtime = this.lifecycle;
-        //     }
-        //     this.incrementLifecycle();
-
-        // } else {
-        //     // Otherwise a new generation
-        //     this.resetLifecycle();
-        //     this.calcFitness();
-        //     this.selection();
-        //     this.reproduction();
-        //     this.evaluate();
-        // }
-    }
+    run() {}
     
-    live() {
-        // For every creature
-        // for (let i = 0; i < this.population.length; i++) {
-        //     // If it finishes, mark it down as done!
-        //     this.population[i].checkTarget();
-        //     this.population[i].run(this.obstacles);
-        // }
-    }
+    live() {}
 
 }
 
@@ -204,7 +178,6 @@ class TextPopulation extends Population {
         this.calcFitness();
         this.selection();
         this.reproduction();
-        // this.evaluate();
     }
 
 }
@@ -225,6 +198,7 @@ class VectorPopulation extends Population {
     createInhabitant(dna){
         dna = (typeof dna !== 'undefined') ? dna : new VectorDNA(null, this.lifetime);
         let position = createVector(width / 2, height + 20);
+
         return new VectorInhabitant(dna, this.target, position)
     }
 
@@ -270,7 +244,7 @@ class VectorPopulation extends Population {
         // If the generation hasn't ended yet
         if (this.lifecycle < this.lifetime) {
             // let the population live
-            this.live(this.obstacles);
+            this.live();
 
             if ((this.targetReached()) && (this.lifecycle < this.recordtime)) {
                 this.recordtime = this.lifecycle;
