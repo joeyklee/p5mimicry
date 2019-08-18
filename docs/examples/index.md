@@ -31,3 +31,7 @@ The examples below correspond to various functions of each of the nocjs `class`e
 * [simple](https://joeyklee.github.io/nocjs/examples/particleSystem_simple)
 * [custom](https://joeyklee.github.io/nocjs/examples/particleSystem_custom)
 * [blending](https://joeyklee.github.io/nocjs/examples/particleSystem_blending)
+
+## GeneticAlgorithm
+* [classicText](https://joeyklee.github.io/nocjs/examples/geneticAlgorithm_classicText)
+* [classicVector](https://joeyklee.github.io/nocjs/examples/geneticAlgorithm_classicVector)

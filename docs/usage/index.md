@@ -251,3 +251,33 @@ new nocjs.ParticleSystem(vectorLocation?)
 ```
 
 docs coming soon
+
+
+## GeneticAlgorithm
+
+### GeneticAlgorithm.DNA
+```js
+new nocjs.GeneticAlgorithm.DNA(newGenes?, lifetime)
+new nocjs.GeneticAlgorithm.VectorDNA(newGenes?, lifetime)
+new nocjs.GeneticAlgorithm.TextDNA(newGenes?, lifetime)
+```
+
+docs coming soon
+
+### GeneticAlgorithm.Inhabitant
+```js
+new nocjs.GeneticAlgorithm.Inhabitant(dna, target)
+new nocjs.GeneticAlgorithm.VectorInhabitant(dna, target, pos)
+new nocjs.GeneticAlgorithm.TextInhabitant(dna, target)
+```
+
+docs coming soon
+
+### GeneticAlgorithm.Population
+```js
+new nocjs.GeneticAlgorithm.Population(mutationRate, populationSize, target)
+new nocjs.GeneticAlgorithm.VectorPopulation(mutationRate, populationSize, target, lifetime)
+new nocjs.GeneticAlgorithm.TextPopulation(mutationRate, populationSize, target)
+```
+
+docs coming soon
