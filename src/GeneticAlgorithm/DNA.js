@@ -32,9 +32,10 @@ class DNA {
     }
 
 
-    // DEPENDS ON THE USE CASE, DEFAULTS TO Random Number between 0 and 1;
+    // DEPENDS ON THE USE CASE, DEFAULTS TO Random Number between -1 and 1;
     createGenes() {
-        return random(0, 1)
+        let num = Number(random(0, 1).toFixed(2))
+        return num
     }
 
     // crossover 

@@ -6,13 +6,11 @@ class Inhabitant {
     }
 
     calcFitness() {
-        let score = 0;
-        for (let i = 0; i < this.dna.genes.length; i++) {
-            if ( Number(this.dna.genes[i].toFixed(2)) == Number(this.target[i].toFixed(2))) {
-                score++;
-            }
-        }
-        this.fitness = score / this.target.length;
+        this.fitness = 0;
+        let sum = this.dna.genes.reduce( (x, y) => x + y);
+        let score = 1 / (sum - this.target);
+        score = score === Infinity ? 0 : score;
+        this.fitness = score;
 
     }
 
@@ -55,7 +53,7 @@ class TextInhabitant extends Inhabitant {
                 score++;
             }
         }
-        this.fitness = score / this.target.length;
+        this.fitness = score;
     }
 
     run() {
