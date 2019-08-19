@@ -12,7 +12,6 @@ class Inhabitant {
         let score =  1 / ( sum - this.target);
         score = (score !== Infinity) ? score : 0;
         this.fitness = score;
-
     }
 
     run() {
@@ -44,7 +43,6 @@ class Inhabitant {
 class TextInhabitant extends Inhabitant {
     constructor(dna, target) {
         super(dna, target);
-
     }
 
     calcFitness() {
@@ -54,7 +52,7 @@ class TextInhabitant extends Inhabitant {
                 score++;
             }
         }
-        this.fitness = score;
+        this.fitness = score / this.target.length;
     }
 
     run() {

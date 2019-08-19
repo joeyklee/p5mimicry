@@ -184,6 +184,7 @@ class TextPopulation extends Population {
         this.calcFitness();
         this.selection();
         this.reproduction();
+        // this.evaluate();
     }
 
 }
