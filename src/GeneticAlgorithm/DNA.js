@@ -34,7 +34,8 @@ class DNA {
 
     // DEPENDS ON THE USE CASE, DEFAULTS TO Random Number between -1 and 1;
     createGenes() {
-        let num = Number(random(0, 1).toFixed(2))
+        let num = random(0, 1)
+        num = parseFloat(num.toFixed(2));
         return num
     }
 
