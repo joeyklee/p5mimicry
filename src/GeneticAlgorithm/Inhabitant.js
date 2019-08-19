@@ -8,8 +8,8 @@ class Inhabitant {
     calcFitness() {
         // TODO: Fix fitness values - they shouldn't be so outrageously large!
         let sum = this.dna.genes.reduce( (x, y) => x + y);
-        let score = 1/(sum - this.target);
-        score = score === Infinity ? 0 : score;
+        let score = 1 / (sum - this.target);
+        score = (score === Infinity) ? 0 : score;
         this.fitness = score;
 
     }

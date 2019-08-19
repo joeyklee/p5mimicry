@@ -2,7 +2,7 @@
 
 let ga = nocjs.GeneticAlgorithm;
 let mutationRate = 0.012;
-let target = 0.24;
+let target = 0.72;
 let population; // Population
 
 
