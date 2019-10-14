@@ -18,6 +18,7 @@ The examples below correspond to various functions of each of the nocjs `class`e
 * [mover_flowFieldRandomGaussian](https://joeyklee.github.io/nocjs/examples/mover_flowFieldRandomGaussian)
 * [mover_flock](https://joeyklee.github.io/nocjs/examples/mover_flock)
 * [mover_flockAndSeek](https://joeyklee.github.io/nocjs/examples/mover_flockAndSeek)
+* [mover_steeringPerceptron](https://joeyklee.github.io/nocjs/examples/mover_steeringPerceptron)
 
 ## Pendulum
 * [pendulum](https://joeyklee.github.io/nocjs/examples/pendulum)
