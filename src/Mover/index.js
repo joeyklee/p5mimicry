@@ -1,3 +1,5 @@
+const steeringPerceptron = require('./SteeringPerceptron');
+
 const DEFAULTS = {
     mass: 40,
     frictionCoefficient: 0.01,
@@ -8,7 +10,9 @@ const DEFAULTS = {
     debug: false,
     separationDistance: 40,
     alignDistance: 40,
-    cohesionDistance: 40
+    cohesionDistance: 40,
+    perceptronTargets: 1,
+    perceptronLearningConstant: 0.5
 }
 
 
@@ -27,8 +31,12 @@ class Mover {
         this.dragCoefficient = options.dragCoefficient || DEFAULTS.dragCoefficient;
         this.separationDistance = options.separationDistance || this.mass / 2 || DEFAULTS.separationDistance;
         this.alignDistance = options.alignDistance || this.mass || DEFAULTS.alignDistance;
-        this.cohesionDistance = options.cohesionDistance || this.mass*2 || DEFAULTS.cohesionDistance;
+        this.cohesionDistance = options.cohesionDistance || this.mass * 2 || DEFAULTS.cohesionDistance;
         this.G = options.G || DEFAULTS.G;
+
+        this.perceptronTargets = options.perceptronTargets || 1;
+        this.perceptronLearningConstant=  options.perceptronLearningConstant || DEFAULTS.perceptronLearningConstant;
+        this.steeringPerceptron = steeringPerceptron(this.perceptronTargets, this.perceptronLearningConstant);
 
         this.debug = options.debug || DEFAULTS.debug;
     }
@@ -240,6 +248,47 @@ class Mover {
         return f;
     }
 
+    /**
+     * 
+     * @param {*} targets 
+     * @param {*} desired 
+     */
+    perceptAndSteer(targets, desired) {
+
+        let forces = new Array(targets.length);
+
+        for (let i = 0; i < targets.length; i++) {
+            forces[i] = this.seekInternal(targets[i]);
+        }
+
+        // feedforward takes an array of forces here
+        let result = this.steeringPerceptron.feedforward(forces);
+
+        this.applyForce(result);
+
+        let error = p5.Vector.sub(desired, this.location);
+
+        this.steeringPerceptron.train(forces, error);
+    }
+
+
+    /**
+     * 
+     * @param {*} target 
+     */
+    seekInternal(target) {
+        let desired = p5.Vector.sub(target, this.location);
+
+        // get there as fast as the mover is able...
+        desired.setMag(this.maxSpeed);
+        // desired.normalize();
+        // desired.mult(this.maxSpeed);
+
+        let steer = p5.Vector.sub(desired, this.velocity);
+        steer.limit(this.maxForce);
+
+        return steer;
+    }
 
     seek(target) {
         const desired = p5.Vector.sub(target, this.location);
@@ -280,7 +329,7 @@ class Mover {
     separate(vehicles) {
         let desiredseparation = this.separationDistance;
         // the steering force is the average of all the force sum/count
-        let steer = createVector(0,0);
+        let steer = createVector(0, 0);
         let count = 0;
         // For every boid in the system, check if it's too close
         for (let i = 0; i < vehicles.length; i++) {
@@ -309,25 +358,25 @@ class Mover {
     }
 
     // align
-    align(vehicles){
+    align(vehicles) {
         let alignDistance = this.alignDistance;
-        let sum = createVector(0,0);
+        let sum = createVector(0, 0);
         let count = 0;
 
-        for(let i = 0; i < vehicles.length; i++){
+        for (let i = 0; i < vehicles.length; i++) {
             let d = p5.Vector.dist(this.location, vehicles[i].location)
 
-            if( (d > 0) && (d < alignDistance)){
+            if ((d > 0) && (d < alignDistance)) {
                 sum.add(vehicles[i].velocity);
                 count++;
             }
         }
 
-        if(count > 0){
+        if (count > 0) {
             sum.div(count);
             sum.normalize();
             sum.mult(this.maxSpeed);
-            
+
             let steer = p5.Vector.sub(sum, this.velocity);
             steer.limit(this.maxForce);
             return steer;
@@ -338,37 +387,37 @@ class Mover {
     }
 
     // cohesion
-    cohesion(vehicles){
+    cohesion(vehicles) {
         let cohesionDistance = this.cohesionDistance;
-        let sum = createVector(0,0);
+        let sum = createVector(0, 0);
         let count = 0;
 
-        for(let i = 0; i < vehicles.length; i++){
+        for (let i = 0; i < vehicles.length; i++) {
             let d = p5.Vector.dist(this.location, vehicles[i].location);
 
-            if( (d > 0) && (d < cohesionDistance)){
+            if ((d > 0) && (d < cohesionDistance)) {
                 sum.add(vehicles[i].location);
                 count++;
             }
         }
-        
-        if(count > 0){
+
+        if (count > 0) {
             sum.div(count);
             sum.normalize();
             sum.mult(this.maxSpeed);
             // Implement Reynolds: Steering = Desired - Velocity
             sum.sub(this.velocity);
             sum.limit(this.maxForce);
-            
+
             // return this.seek(sum)
             return sum
         } else {
-            return createVector(0,0);
+            return createVector(0, 0);
         }
 
     }
 
-    flock(vehicles, flockOptions = {}){
+    flock(vehicles, flockOptions = {}) {
         flockOptions = (typeof flockOptions !== 'undefined') ? flockOptions : {};
         let sepMultiplier = flockOptions.sepMultiplier || 1.5;
         let aliMultiplier = flockOptions.aliMultiplier || 1.0;
@@ -405,29 +454,29 @@ class Mover {
         this.acceleration.mult(0);
     }
 
-    contain(centerVector, w, h){
+    contain(centerVector, w, h) {
         let desired = null;
-        const rW = w/2;
-        const rH = h/2; 
-        if (this.location.x < (centerVector.x - rW) ) {
+        const rW = w / 2;
+        const rH = h / 2;
+        if (this.location.x < (centerVector.x - rW)) {
             desired = createVector(this.maxSpeed, this.velocity.y);
-          } else if (this.location.x > (centerVector.x + rW)) {
+        } else if (this.location.x > (centerVector.x + rW)) {
             desired = createVector(-this.maxSpeed, this.velocity.y);
-          }
-      
-          if (this.location.y < (centerVector.y - rH)) {
+        }
+
+        if (this.location.y < (centerVector.y - rH)) {
             desired = createVector(this.velocity.x, this.maxSpeed);
-          } else if (this.location.y > (centerVector.y + rH)) {
+        } else if (this.location.y > (centerVector.y + rH)) {
             desired = createVector(this.velocity.x, -this.maxSpeed);
-          }
-      
-          if (desired !== null) {
+        }
+
+        if (desired !== null) {
             desired.normalize();
             desired.mult(this.maxSpeed);
             let steer = p5.Vector.sub(desired, this.velocity);
             steer.limit(this.maxForce);
             this.applyForce(steer);
-          }
+        }
     }
 
     checkEdges() {
