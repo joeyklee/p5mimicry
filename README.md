@@ -1,4 +1,4 @@
-# p5-mimicry.js
+# p5mimicry.js
 
 **WIP Please ignore**
 
