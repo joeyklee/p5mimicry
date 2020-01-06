@@ -39,24 +39,32 @@
                     text-align:center;
                 }
                 #app > header > h1 {
-                    font-size:6rem;
-                    font-family: 'Cedarville Cursive', cursive;;
+                    font-size:2.8rem;
+                    font-family: 'Cedarville Cursive', cursive;
+                    text-align:center;
+                    text-shadow:2px 2px  rgba(220, 220, 220, 1);
+                    line-height: 0.75;
+                }
+
+                #app > header > h1 > sub {
+                    font-size:3rem;
+                    font-family:  'Cedarville Cursive', cursive;;
                     text-align:center;
                     text-shadow:2px 2px  rgba(220, 220, 220, 1);
                     line-height: 0.75;
                 }
 
                 #app > header > h2 {
-                    /* margin-top:1.6rem; */
+                    margin-top:1.4rem;
                     font-size:1.3rem;
-                    font-family: 'Playfair Display', serif;
+                    font-family: sans-serif, 'Cedarville Cursive', cursive, 'Playfair Display', serif;
                     text-align:center;
                     max-width:280px;
                     font-weight:200; 
                 }
 
                 #app > header > p{
-                    /* margin-top:1.6rem; */
+                    margin-top:1.6rem;
                     border: 0.01rem solid rgba(230, 230, 230, 0.75);
                     padding:0.35rem 0.5rem;
                     background-color: rgba(  230, 230, 230 ,0.2);
@@ -90,8 +98,8 @@
     </head>
     <div id="app">
         <header>
-            <h1>p5mimicry</h1>
-            <h2>A javascript library for <br> Nature of Code</h2>
+            <h1>p5<sub>mimicry</sub></h1>
+            <h2>A p5.js library for simulating natural behaviors based on Dan Shiffman's Nature of Code</h2>
             <p> <a href="https://joeyklee.github.io/p5mimicry/docs">get started</a> </p>
         </header>
         <div id="sketch">

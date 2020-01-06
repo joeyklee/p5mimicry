@@ -2,7 +2,7 @@
 
 **WIP Please ignore**
 
-![](assets/images/home-05.png)
+![](assets/images/home-06.png)
 
 ## About
 
