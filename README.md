@@ -1,4 +1,4 @@
-# NOC.js
+# p5-mimicry.js
 
 **WIP Please ignore**
 
