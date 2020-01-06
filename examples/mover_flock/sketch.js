@@ -2,7 +2,7 @@ let movers = [];
 function setup() {
     createCanvas(480, 360);
     randomSeed(3);
-    movers = [...new Array(50).fill(null)].map(item => new nocjs.Mover(random(width), random(height), 30, {maxSpeed:2}))
+    movers = [...new Array(50).fill(null)].map(item => new p5mimicry.Mover(random(width), random(height), 30, {maxSpeed:2}))
 }
 
 function draw() {

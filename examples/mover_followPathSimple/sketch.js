@@ -4,9 +4,9 @@ let path;
 function setup(){
     createCanvas(480, 360);
 
-    mover = new nocjs.Mover(20, 20, 40, {maxForce: 1.5});
+    mover = new p5mimicry.Mover(20, 20, 40, {maxForce: 1.5});
 
-    path = new nocjs.Path(0, height*0.25, width, height*0.75, 10);
+    path = new p5mimicry.Path(0, height*0.25, width, height*0.75, 10);
 }
 
 function draw(){

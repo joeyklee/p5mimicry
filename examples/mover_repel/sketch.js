@@ -4,8 +4,8 @@ let repeller;
 function setup(){
     createCanvas(480, 360);
 
-    mover = new nocjs.Mover(width/2, height/2, 30);
-    repeller =  new nocjs.Mover(width/2, height/2, 80);
+    mover = new p5mimicry.Mover(width/2, height/2, 30);
+    repeller =  new p5mimicry.Mover(width/2, height/2, 80);
 }
 
 function draw(){

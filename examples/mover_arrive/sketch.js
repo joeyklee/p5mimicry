@@ -2,7 +2,7 @@
 let mover;
 function setup(){
     createCanvas(480, 360);
-    mover = new nocjs.Mover(width/2, height/2, 40, {maxForce: 10, maxSpeed: 4});
+    mover = new p5mimicry.Mover(width/2, height/2, 40, {maxForce: 10, maxSpeed: 4});
 }
 
 function draw(){

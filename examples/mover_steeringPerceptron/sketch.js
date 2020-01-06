@@ -15,7 +15,7 @@ function setup() {
     // targets.push(createVector(width * 0.75, height * 0.25))
     // targets.push(createVector(width * 0.25, height * 0.25))
 
-    mover = new nocjs.Mover(width / 2, height / 2, 40, {
+    mover = new p5mimicry.Mover(width / 2, height / 2, 40, {
         maxForce: 1,
         maxSpeed: 2,
         perceptronTargets: targets.length

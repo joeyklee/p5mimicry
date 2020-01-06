@@ -13,8 +13,8 @@ export default {
     path: resolve(__dirname, 'dist'),
     publicPath: '/',
     libraryTarget: 'umd',
-    filename: 'nocjs.js',
-    library: 'nocjs',
+    filename: 'p5mimicry.js',
+    library: 'p5mimicry',
   },
   module: {
     rules: [

@@ -1,4 +1,4 @@
-# Learn to use nocjs
+# Learn to use p5mimicry
 
 An open-source JavaScript library for p5.js based on [Dan Shiffman](https://shiffman.net/)'s [Nature of Code](https://natureofcode.com/) by @[Joey Lee](https://jk-lee.com/work/).
 
@@ -12,8 +12,8 @@ Add these to your html file
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.sound.min.js"></script>
-<!-- nocjs -->
-<script src="https://unpkg.com/nocjs@latest/dist/nocjs.min.js"></script>
+<!-- p5mimicry -->
+<script src="https://unpkg.com/p5mimicry@latest/dist/p5mimicry.min.js"></script>
 ```
 
 or 
@@ -21,14 +21,14 @@ or
 If you're using a bundler like `webpack` or `browserify` you can `npm install`:
 
 ```sh
-npm install p5 nocjs
+npm install p5 p5mimicry
 ```
 
 
 
 ## Getting Started
 
-Include the latest nocjs.js and p5.js versions into your `index.html` file, then start making!:
+Include the latest p5mimicry.js and p5.js versions into your `index.html` file, then start making!:
 
 
 ```html
@@ -44,14 +44,14 @@ Include the latest nocjs.js and p5.js versions into your `index.html` file, then
   </head>
   <body>
       
-    <!-- NOCjs -->
-    <!-- <script src="http://localhost:8080/nocjs.js"></script> -->
-    <script src="https://unpkg.com/nocjs@latest/dist/nocjs.min.js"></script>
+    <!-- p5mimicry -->
+    <!-- <script src="http://localhost:8080/p5mimicry.js"></script> -->
+    <script src="https://unpkg.com/p5mimicry@latest/dist/p5mimicry.min.js"></script>
     <script>
     let mover;
     function setup(){
         createCanvas(480, 360);
-        mover = new nocjs.Mover(width/2, height/2, 40);
+        mover = new p5mimicry.Mover(width/2, height/2, 40);
     }
     function draw(){
         background(220);
@@ -78,7 +78,7 @@ Read the [usage](/usage) docs to learn more about the various nature of code `cl
 
 ## Issues
 
-Report any issues you might encounter here on the project's [GitHub Issues](https://github.com/joeyklee/nocjs/issues)
+Report any issues you might encounter here on the project's [GitHub Issues](https://github.com/joeyklee/p5mimicry/issues)
 
 
 ## Credits

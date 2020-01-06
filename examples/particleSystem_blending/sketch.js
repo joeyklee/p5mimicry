@@ -2,7 +2,7 @@
 let ps;
 function setup(){
     createCanvas(480, 360);
-    ps = new nocjs.ParticleSystem( createVector(width/2, 20) );
+    ps = new p5mimicry.ParticleSystem( createVector(width/2, 20) );
     
     
 }   

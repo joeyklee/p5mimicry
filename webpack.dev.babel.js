@@ -12,7 +12,7 @@ export default merge(common, {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'nocjs'
+      title: 'p5mimicry'
     })
   ]
 })

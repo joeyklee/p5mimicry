@@ -1,11 +1,11 @@
 # Usage
 
-Here you'll find the documentation for the `class`es and functions that are available to you using `nocjs`.
+Here you'll find the documentation for the `class`es and functions that are available to you using `p5mimicry`.
 
 ## Mover
 
 ```js
-new nocjs.Mover(x?, y?, mass?, options?)
+new p5mimicry.Mover(x?, y?, mass?, options?)
 ```
 
 **Parameters**
@@ -133,7 +133,7 @@ const DEFAULTS = {
 .follow(Path?)
 ```
 **Parameters**:
-* Path?: A nocjs.Path class
+* Path?: A p5mimicry.Path class
 
 
 **.followComplex(PathComplex?)**
@@ -142,7 +142,7 @@ const DEFAULTS = {
 .followComplex(PathComplex?)
 ```
 **Parameters**:
-* Path?: A nocjs.Path class
+* Path?: A p5mimicry.Path class
 
 **.checkEdges()**
 > checks the screen edges and doesn't allow the Movers to jump out
@@ -212,7 +212,7 @@ const DEFAULTS = {
 ## Pendulum
 
 ```js
-new nocjs.Pendulum(x, y, armLength, bobRadius, options ={})
+new p5mimicry.Pendulum(x, y, armLength, bobRadius, options ={})
 ```
 
 docs coming soon
@@ -221,7 +221,7 @@ docs coming soon
 ## Spring
 
 ```js
-new nocjs.Spring(x, y, length, options = {}, bobOptions = {})
+new p5mimicry.Spring(x, y, length, options = {}, bobOptions = {})
 ```
 
 docs coming soon
@@ -230,7 +230,7 @@ docs coming soon
 ## Path
 
 ```js
-new nocjs.Path()
+new p5mimicry.Path()
 ```
 
 docs coming soon
@@ -238,7 +238,7 @@ docs coming soon
 ## PathComplex
 
 ```js
-new nocjs.PathComplex()
+new p5mimicry.PathComplex()
 ```
 
 docs coming soon
@@ -247,7 +247,7 @@ docs coming soon
 
 
 ```js
-new nocjs.ParticleSystem(vectorLocation?)
+new p5mimicry.ParticleSystem(vectorLocation?)
 ```
 
 docs coming soon
@@ -257,27 +257,27 @@ docs coming soon
 
 ### GeneticAlgorithm.DNA
 ```js
-new nocjs.GeneticAlgorithm.DNA(newGenes?, lifetime)
-new nocjs.GeneticAlgorithm.VectorDNA(newGenes?, lifetime)
-new nocjs.GeneticAlgorithm.TextDNA(newGenes?, lifetime)
+new p5mimicry.GeneticAlgorithm.DNA(newGenes?, lifetime)
+new p5mimicry.GeneticAlgorithm.VectorDNA(newGenes?, lifetime)
+new p5mimicry.GeneticAlgorithm.TextDNA(newGenes?, lifetime)
 ```
 
 docs coming soon
 
 ### GeneticAlgorithm.Inhabitant
 ```js
-new nocjs.GeneticAlgorithm.Inhabitant(dna, target)
-new nocjs.GeneticAlgorithm.VectorInhabitant(dna, target, pos)
-new nocjs.GeneticAlgorithm.TextInhabitant(dna, target)
+new p5mimicry.GeneticAlgorithm.Inhabitant(dna, target)
+new p5mimicry.GeneticAlgorithm.VectorInhabitant(dna, target, pos)
+new p5mimicry.GeneticAlgorithm.TextInhabitant(dna, target)
 ```
 
 docs coming soon
 
 ### GeneticAlgorithm.Population
 ```js
-new nocjs.GeneticAlgorithm.Population(mutationRate, populationSize, target)
-new nocjs.GeneticAlgorithm.VectorPopulation(mutationRate, populationSize, target, lifetime)
-new nocjs.GeneticAlgorithm.TextPopulation(mutationRate, populationSize, target)
+new p5mimicry.GeneticAlgorithm.Population(mutationRate, populationSize, target)
+new p5mimicry.GeneticAlgorithm.VectorPopulation(mutationRate, populationSize, target, lifetime)
+new p5mimicry.GeneticAlgorithm.TextPopulation(mutationRate, populationSize, target)
 ```
 
 docs coming soon

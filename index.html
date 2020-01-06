@@ -4,7 +4,7 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.sound.min.js"></script>
-            <script src="https://unpkg.com/nocjs@latest/dist/nocjs.min.js"></script>
+            <script src="https://unpkg.com/p5mimicry@latest/dist/p5mimicry.min.js"></script>
 
             <link href="https://fonts.googleapis.com/css?family=Cedarville+Cursive|Playfair+Display&display=swap" rel="stylesheet"> 
 
@@ -90,9 +90,9 @@
     </head>
     <div id="app">
         <header>
-            <h1>nocjs</h1>
+            <h1>p5mimicry</h1>
             <h2>A javascript library for <br> Nature of Code</h2>
-            <p> <a href="https://joeyklee.github.io/nocjs/docs">get started</a> </p>
+            <p> <a href="https://joeyklee.github.io/p5mimicry/docs">get started</a> </p>
         </header>
         <div id="sketch">
 
@@ -113,20 +113,20 @@
             movers = [... new Array(100).fill(null)].map( item => {
                 let x = random(width*0.25, width*0.75);
                 let y = random(height*0.25, height*0.75)
-                let m =  new nocjs.Mover(x, y, 10, {maxForce: 0.5, maxSpeed:1.8} )
+                let m =  new p5mimicry.Mover(x, y, 10, {maxForce: 0.5, maxSpeed:1.8} )
                 return m;
             });
 
             repellers = [... new Array(20).fill(null)].map( item => {
                 let x = random(width*0.25, width*0.75);
                 let y = random(height*0.25, height*0.75)
-                let m =  new nocjs.Mover(x, y, random(100) )
+                let m =  new p5mimicry.Mover(x, y, random(100) )
                 return m;
             });
 
-            // movingTarget  = new nocjs.Mover(width/2, height/2 - 150, 40);
-            target = new nocjs.Mover(width/2, height/2, 100);
-            // repeller = new nocjs.Mover(width/2, height/2, 40);
+            // movingTarget  = new p5mimicry.Mover(width/2, height/2 - 150, 40);
+            target = new p5mimicry.Mover(width/2, height/2, 100);
+            // repeller = new p5mimicry.Mover(width/2, height/2, 40);
             background(243)
         }
 

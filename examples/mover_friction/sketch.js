@@ -6,10 +6,10 @@ function setup() {
     createCanvas(480, 360);
     randomSeed(3);
 
-    // movers[0] = new nocjs.Mover(width/2, 10, 40);
-    // movers[1] = new nocjs.Mover(20, 10, 40);
+    // movers[0] = new p5mimicry.Mover(width/2, 10, 40);
+    // movers[1] = new p5mimicry.Mover(20, 10, 40);
 
-    movers = [...new Array(50).fill(null)].map(item => new nocjs.Mover(random(width), 10, 30, {maxSpeed:4}))
+    movers = [...new Array(50).fill(null)].map(item => new p5mimicry.Mover(random(width), 10, 30, {maxSpeed:4}))
 
     frictionArea = new FrictionArea(width / 2, height / 2, 100);
 

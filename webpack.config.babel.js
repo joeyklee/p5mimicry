@@ -8,8 +8,8 @@
 //     output: {
 //         path: path.resolve(__dirname, 'dist'),
 //         // libraryTarget:'umd',
-//         library:'nocjs', // this is what it will be called on window object
-//         filename: 'nocjs.min.js'
+//         library:'p5mimicry', // this is what it will be called on window object
+//         filename: 'p5mimicry.min.js'
 //     },
 //     devtool:'source-map',
 //     mode:'production'
@@ -23,7 +23,7 @@ export default merge(common, {
   mode: 'production',
   devtool: 'source-map',
   output: {
-    filename: 'nocjs.min.js'
+    filename: 'p5mimicry.min.js'
   },
   plugins: [
     new UglifyJSPlugin({

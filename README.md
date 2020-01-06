@@ -15,7 +15,7 @@ I hope you can find inspiration in the natural world and find new ways to simula
 
 ## Docs
 
-* [docs](https://joeyklee.github.io/nocjs/docs/#/)
+* [docs](https://joeyklee.github.io/p5-mimicry/docs/#/)
 
 ## Examples
 
@@ -25,11 +25,11 @@ see: [/examples](/examples)
 
 beta:
 ```
-https://unpkg.com/nocjs@latest/dist/nocjs.min.js
+https://unpkg.com/p5mimicry@latest/dist/p5-mimicry.min.js
 ```
 
 see versions:
-https://www.npmjs.com/package/nocjs
+https://www.npmjs.com/package/p5-mimicry
 
 ## Credits:
 * **Nature of Code** by Dan Shiffman
@@ -57,12 +57,12 @@ The process goes something like:
 
 ### Setup and start
 ```
-cd nocjs
+cd p5-mimicry
 npm install
 npm run start
 ```
 
-the library will be served at: `localhost:<PORT>/nocjs.js`
+the library will be served at: `localhost:<PORT>/p5-mimicry.js`
 
 Add your classes in the [/src](/src) directory with a folder called `/MyClassName` that includes:
 * index.js

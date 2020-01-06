@@ -1,6 +1,6 @@
 // ***************
 
-let ga = nocjs.GeneticAlgorithm;
+let ga = p5mimicry.GeneticAlgorithm;
 let mutationRate = 0.01;
 let target;
 let population; // Population

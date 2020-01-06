@@ -2,7 +2,7 @@ let wave;
 function setup() {
     createCanvas(480, 360);
     
-    wave = new nocjs.Wave(1, 0.6, -0.05, 200, 40, 10)
+    wave = new p5mimicry.Wave(1, 0.6, -0.05, 200, 40, 10)
     background(250);
 }
 
