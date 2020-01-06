@@ -111,6 +111,7 @@ Working through these: https://github.com/nature-of-code/noc-examples-p5.js
   * flow field ✅
   * separation ✅
   * flocking ✅
+  * steering perceptron ✅
 * Wave ✅
 * Path ✅
   * path-simple ✅
