@@ -1,8 +1,8 @@
 {
-  "name": "nocjs",
+  "name": "p5-mimicry",
   "version": "0.0.18",
   "description": "",
-  "main": "dist/nocjs.min.js",
+  "main": "dist/p5-mimicry.min.js",
   "scripts": {
     "test": "mocha --require babel-core/register src/*/index_test.js -w",
     "start": "webpack-dev-server --open --config webpack.dev.babel.js",
@@ -15,10 +15,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/joeyklee/nocjs.git"
+    "url": "https://github.com/joeyklee/p5-mimicry.git"
   },
   "bugs": {
-    "url": "https://github.com/joeyklee/nocjs/issues"
+    "url": "https://github.com/joeyklee/p5-mimicry/issues"
   },
   "babel": {
     "presets": [
